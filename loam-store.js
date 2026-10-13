@@ -324,6 +324,16 @@
     }
   };
 
+  // ---- Low-confidence rule (simulated AI confidence) ----
+  // The AI is least sure on long answers (5+ marks) where it gave part marks:
+  // many steps, partial working, most room for a different valid method.
+  function isLowConfidence(studentName, qCode) {
+    var q = data.questionsByCode && data.questionsByCode[qCode];
+    var sc = scoreFor(studentName, qCode);
+    if (!q || !sc || q.type === 'mcq' || q.max_marks < 5) return false;
+    return sc.marks_awarded > 0 && sc.marks_awarded < sc.max_marks;
+  }
+
   // ---- Public API ----
   window.LOAM = {
     ready: ready,
@@ -347,6 +357,7 @@
     studentStatus: studentStatus,
     rosterIndex: rosterIndex,
     reviewedCount: reviewedCount,
+    isLowConfidence: isLowConfidence,
     DEFAULT_STUDENT: DEFAULT_STUDENT
   };
   // attach actions

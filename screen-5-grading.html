@@ -1345,6 +1345,16 @@
     font-family: inherit;
   }
 
+
+  /* Low-confidence flag */
+  .lowconf-banner { display:flex; gap:10px; align-items:flex-start; margin:0 0 14px; padding:10px 12px;
+    background: var(--brand-orange-soft, #FFF1E5); border:1px solid #F8C8A0; border-radius:8px; color:#9A4A0B; }
+  .lowconf-banner[hidden] { display:none; }
+  .lowconf-banner svg { flex:none; margin-top:2px; color: var(--brand-orange, #F37920); }
+  .lowconf-banner b { font-size:12px; letter-spacing:.04em; }
+  .lowconf-banner p { margin:2px 0 0; font-size:13px; line-height:1.45; color:#7A3B09; }
+  .lowconf-tag { display:inline-block; margin-left:6px; padding:0 6px; border-radius:999px; font-size:10px; font-weight:600;
+    line-height:16px; background: var(--brand-orange-soft, #FFF1E5); color:#B4560F; vertical-align:1px; }
 </style>
 </head>
 <body>
@@ -1566,6 +1576,15 @@
           </div>
 
           <!-- QUESTION TOTAL block removed — moved to slim sticky bar above action bar -->
+
+          <!-- LOW-CONFIDENCE BANNER (shown only when the AI is unsure) -->
+          <div class="lowconf-banner" id="lowconf-banner" hidden>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+            <div>
+              <b>AI confidence: LOW</b>
+              <p>Long answer with part marks. The working may use a method the answer key doesn’t cover. The marks below are provisional. Please check each step.</p>
+            </div>
+          </div>
 
           <!-- AI STEPWISE GRADING -->
           <div class="ws-block">
@@ -2198,6 +2217,8 @@ document.addEventListener('click', (e) => {
       var pq = $('paper-question');
       if (pq) { pq.innerHTML = '<span class="qmeta">' + cur + ' · ' + q.max_marks + 'm</span>' + esc(questionText(cur, name)); katex(pq); }
       renderAnswerKey(cur, name);
+      var lc = $('lowconf-banner');
+      if (lc) lc.hidden = !(S.isLowConfidence && S.isLowConfidence(name, cur) && !S.isReviewed(name, cur));
       renderSteps(cur, name);
       renderTotal(cur, name);
       renderNotes(cur, name);

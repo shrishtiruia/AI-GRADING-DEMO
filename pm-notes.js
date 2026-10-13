@@ -41,7 +41,7 @@
 
     { file: 'screen-5-grading.html', step: '5 / 7', title: 'Subjective answers: every mark has a reason',
       job: 'The screen where the buyer decides whether to trust LOAM.',
-      decision: 'The scanned answer sits next to the AI’s step-by-step marks, with a reason for each deduction. The teacher can edit any step, tag the error type and add a note.',
+      decision: 'The scanned answer sits next to the AI’s step-by-step marks, with a reason for each deduction. The teacher can edit any step, tag the error type and add a note. Long answers with part marks get an orange <b>Low confidence</b> flag, so the AI never fakes certainty and the teacher knows where to look first.',
       evidence: 'From the real marks data: <b>41% of written answers got part marks</b>, and about half in the 3-, 4- and 5-mark sections. A right/wrong AI wouldn’t work here. It has to mark step by step, the way CBSE does. <a href="analysis/results.md">See the query →</a>',
       metric: 'Teacher override rate per question type. If it’s high, the AI or the rubric needs work.',
       next: 'Next: checking the whole paper before submitting.' },

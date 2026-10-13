@@ -1,6 +1,6 @@
 # LOAM: AI-assisted grading for CBSE Maths teachers
 
-**The AI marks the papers step by step, and the teacher only checks what matters.** This clickable prototype pitched LOAM to Narayana Educational Institutions, and the pitch won the contract.
+**The AI marks the papers step by step, and the teacher only checks what matters.** This clickable prototype pitched LOAM to Narayana Educational Institutions and won a **$300K/year** contract.
 
 **▶ [Take the guided tour (3 min)](https://shrishtiruia.github.io/AI-GRADING-DEMO/)**. Every screen has a *PM notes* panel explaining the decision behind it.
 
@@ -10,9 +10,9 @@
 |---|---|
 | **Problem** | Class XII pre-board papers are marked step by step, by hand. That's 38 questions × 30+ students per section, and a school chain can't see whether its teachers mark consistently. |
 | **Users** | The **teacher** uses it. **School leadership** buys it. The design had to win both. |
-| **What I built** | An 8-screen prototype: load the rubric → AI grades → bulk-approve MCQs → review written answers step by step → class complete. |
-| **My role** | ✏️ TODO: one line, in your words (e.g. "Lead PM: wrote the brief and demo script, defined the data model, built the prototype with Claude Design"). |
-| **Result** | Won the Narayana contract. ✏️ TODO: scope and timing (schools / students / exam cycles), if you can share it. |
+| **What I built** | An 8-screen prototype: load the rubric → AI grades → bulk-approve MCQs → review written answers step by step, with low-confidence flags → class complete. |
+| **My role** | **Lead PM, end to end.** Wrote and scoped the brief, defined the data model, pulled the demo data from production, built and tested the prototype with Claude Design, ran the pitch, and owned post-sales. |
+| **Result** | **Won a $300K/year contract** with Narayana Educational Institutions, one of India's largest education groups ([900+ institutions in 250+ cities across 23 states](https://en.wikipedia.org/wiki/Narayana_Educational_Institutions)). |
 
 ---
 
@@ -33,7 +33,7 @@ LOAM first reads the CBSE marking scheme, the teacher's step-wise answer key and
 *Why:* the buyer's first question is "will it mark the way **we** mark?" This answers it before a single paper is graded.
 
 **② Check only what the AI isn't sure about.**
-MCQs are approved as a block, and the teacher scans for red rows. From the brief: *"We don't ask you to verify what AI is sure about. We ask you to verify what it isn't."*
+MCQs are approved as a block, and the teacher scans for red rows. On written answers, the AI flags the ones it's unsure about (long answers with part marks) with an orange **Low confidence** banner, so the teacher knows where to look first. From the brief: *"We don't ask you to verify what AI is sure about. We ask you to verify what it isn't."*
 *Trade-off:* bulk approval risks rubber-stamping. The final review screen shows all 38 questions with their status before anything is submitted.
 
 **③ Every mark has a reason, and every mark can be changed.**
@@ -42,15 +42,14 @@ Written answers show AI marks per step, with the reason for each deduction. The 
 
 Design system rules that came out of this ([see page](design-system.html)): the grading workspace is dense and plain because teachers spend hours in it. Orange is used only for final actions, at most once per screen. Light grey is never used for text, since teachers read dense marks tables for long stretches.
 
-## 3. Scope: what I cut
+## 3. Scope: what went in the pitch, and what I held back
 
-The brief ([docs/design-brief.md](docs/design-brief.md)) planned 13 screens. **I built 8**, the core grading loop, because that's where the buying decision gets made.
+The brief ([docs/design-brief.md](docs/design-brief.md)) planned 13 screens. **I demoed 8**, the core grading loop, and deliberately kept the rest out of the base deal as a **premium bundle**.
 
-| Cut | Why |
-|---|---|
-| Student report + regrade requests (3 screens) | ✏️ TODO |
-| Results to students/parents, print reports, publish to nLearn | ✏️ TODO |
-| Low-confidence flag on written answers | ✏️ TODO (planned in brief, not built) |
+| | What's in it | Why |
+|---|---|---|
+| **Base product** (demoed) | AI step-wise grading, teacher review with low-confidence flags, class summary. Results go to students and parents. | This is the core value, and where the buying decision gets made. |
+| **Premium bundle** (held back) | Student report with **regrade requests** (3 screens), plus **integration with Narayana's own systems** (marks synced into nLearn) | These matter most to a large chain running exams at scale. Pricing them as an upgrade grows the account after the first deal, instead of giving them away up front. |
 
 ## 4. How I'd measure success in a pilot
 

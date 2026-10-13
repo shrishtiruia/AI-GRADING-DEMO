@@ -119,6 +119,17 @@
 
     list.innerHTML = html || '<div class="lp-empty">No questions match “' + q + '”.</div>';
 
+    // ---- mark low-confidence questions ----
+    list.querySelectorAll('.q-item').forEach(function (it) {
+      if (S.isLowConfidence && S.isLowConfidence(name, it.dataset.code) && !S.isReviewed(name, it.dataset.code)) {
+        it.classList.add('is-lowconf');
+        var tag = document.createElement('span');
+        tag.className = 'lowconf-tag'; tag.textContent = 'Low confidence';
+        tag.title = 'AI is unsure about this answer. Please review.';
+        (it.querySelector('.qi-code') || it).appendChild(tag);
+      }
+    });
+
     // ---- wire item clicks ----
     list.querySelectorAll('.q-item').forEach(function (it) {
       it.addEventListener('click', function () {
@@ -159,6 +170,14 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', mount);
   } else { mount(); }
+
+  // styles for the low-confidence tag (panel is shared by screens 4, 5 and 6)
+  (function () {
+    var st = document.createElement('style');
+    st.textContent = '.lowconf-tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:999px;font:600 10px/16px "Plus Jakarta Sans",system-ui,sans-serif;' +
+      'background:#FFF1E5;color:#B4560F;vertical-align:1px;letter-spacing:0}';
+    document.head.appendChild(st);
+  })();
 
   window.LOAMPanel = { render: render };
 })();
