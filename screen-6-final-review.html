@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1440, initial-scale=1.0" />
+<title>LOAM · Screen 6 — Final review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --brand-blue: #1E7CE8;
+    --brand-blue-soft: #E8F2FF;
+    --brand-orange: #F37920;
+    --brand-orange-soft: #FFF1E5;
+    --subject-maths: #F4A04A;
+
+    --gray-50:  #FAFAF9;
+    --gray-100: #F4F4F2;
+    --gray-200: #E7E5E0;
+    --gray-300: #D4D2CC;
+    --gray-400: #A8A6A0;
+    --gray-500: #6B6964;
+    --gray-600: #4A4844;
+    --gray-700: #2C2A26;
+    --gray-900: #0F0E0C;
+
+    --success: #16A34A;
+    --success-soft: #DCFCE7;
+    --warning: #F37920;
+    --warning-soft: #FFF1E5;
+    --danger: #DC2626;
+    --danger-soft: #FEE2E2;
+
+    --radius-card: 10px;
+    --radius-btn: 6px;
+    --radius-input: 6px;
+
+    --shadow-card: 0 1px 2px rgba(15,14,12,0.04), 0 0 0 1px rgba(15,14,12,0.06);
+    --shadow-hover: 0 4px 12px rgba(15,14,12,0.08), 0 0 0 1px rgba(30,124,232,0.2);
+
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+    --lp-width: 280px;
+    --lp-width-collapsed: 56px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--gray-700);
+    background: var(--gray-50);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-width: 1100px;
+  }
+
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  input { font-family: inherit; }
+
+  /* ============ TOP BAR ============ */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 52px;
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center;
+    padding: 0 20px;
+    z-index: 10;
+  }
+  .wordmark {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--brand-orange);
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .breadcrumb {
+    margin-left: 16px;
+    color: var(--gray-500); font-size: 13px; font-weight: 500;
+    display: flex; align-items: center;
+  }
+  .breadcrumb .sep { color: var(--gray-300); margin: 0 8px; }
+  .breadcrumb .current { color: var(--gray-700); }
+  .topbar-right {
+    margin-left: auto; display: flex; align-items: center; gap: 12px;
+  }
+  .search {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-input);
+    padding: 6px 10px;
+    width: 280px;
+    font-size: 13px;
+    color: var(--gray-500);
+    transition: border-color .15s, background .15s;
+  }
+  .search:hover { border-color: var(--gray-200); background: #fff; }
+  .search .kbd {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 1px 6px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    color: var(--gray-500);
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-btn);
+    color: var(--gray-500);
+    position: relative;
+    transition: background .15s, color .15s;
+  }
+  .icon-btn:hover { background: var(--gray-100); color: var(--gray-700); }
+  .icon-btn .badge {
+    position: absolute; top: 6px; right: 6px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--brand-orange);
+    border: 1.5px solid #fff;
+  }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--brand-blue-soft); color: var(--brand-blue);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 12px;
+  }
+
+  /* ============ APP LAYOUT ============ */
+  .app { display: flex; padding-top: 52px; min-height: 100vh; }
+
+  /* ============ LEFT PANEL ============ */
+  .leftpanel {
+    width: var(--lp-width);
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid var(--gray-200);
+    display: flex; flex-direction: column;
+    position: sticky; top: 52px;
+    height: calc(100vh - 52px);
+    transition: width .22s ease;
+    overflow: hidden;
+  }
+  .leftpanel.collapsed { width: var(--lp-width-collapsed); }
+
+  .lp-header {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; flex-direction: column;
+    gap: 10px;
+  }
+  .lp-header-top {
+    display: flex; align-items: center; gap: 8px;
+    min-width: 0;
+  }
+  .lp-title {
+    flex: 1; min-width: 0;
+    font-size: 13px; font-weight: 600; color: var(--gray-700);
+    letter-spacing: -0.005em;
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap; overflow: hidden;
+  }
+  .leftpanel.collapsed .lp-title { display: none; }
+  .subject-dot {
+    width: 8px; height: 8px; border-radius: 2px;
+    background: var(--subject-maths);
+    flex-shrink: 0;
+  }
+  .lp-toggle {
+    width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-btn);
+    color: var(--gray-500);
+    flex-shrink: 0;
+    transition: background .15s, color .15s, transform .22s ease;
+  }
+  .lp-toggle:hover { background: var(--gray-100); color: var(--gray-700); }
+  .leftpanel.collapsed .lp-toggle { transform: rotate(180deg); margin: 0 auto; }
+
+  .lp-progress-block { transition: opacity .15s; }
+  .leftpanel.collapsed .lp-progress-block { display: none; }
+  .lp-progress-meta {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .lp-progress-text {
+    font-size: 11px; font-weight: 600; color: var(--gray-500);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .lp-progress-count {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500; color: var(--gray-600);
+  }
+  .lp-progressbar {
+    margin-top: 6px;
+    height: 3px; background: var(--gray-100); border-radius: 999px; overflow: hidden;
+  }
+  .lp-progressbar .fill { height: 100%; background: var(--brand-blue); width: 40%; }
+
+  .lp-search-wrap { position: relative; }
+  .lp-search-wrap svg {
+    position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+    color: var(--gray-400);
+  }
+  .lp-search {
+    width: 100%;
+    background: var(--gray-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-input);
+    padding: 6px 10px 6px 28px;
+    font-size: 13px;
+    color: var(--gray-700);
+    outline: none;
+    transition: background .15s, border-color .15s;
+  }
+  .leftpanel.collapsed .lp-search-wrap { display: none; }
+  .lp-search::placeholder { color: var(--gray-400); }
+  .lp-search:focus { background: #fff; border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--brand-blue-soft); }
+
+  .lp-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+  }
+
+  /* Expanded row */
+  .student-row {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 9px 16px 9px 13px;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: background .12s;
+  }
+  .student-row:hover { background: var(--gray-50); }
+  .student-row.active {
+    background: var(--brand-blue-soft);
+    border-left-color: var(--brand-blue);
+  }
+  .student-row.active .student-name { color: var(--gray-900); font-weight: 600; }
+
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gray-300);
+    flex-shrink: 0;
+  }
+  .dot.in-progress { background: var(--brand-blue); }
+  .dot.reviewed { background: var(--success); }
+  .dot.flagged { background: var(--brand-orange); box-shadow: 0 0 0 3px var(--brand-orange-soft); }
+  .dot.absent { background: transparent; border: 1px dashed var(--gray-400); }
+
+  .student-meta { min-width: 0; }
+  .student-name {
+    font-size: 13px; font-weight: 500; color: var(--gray-700);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .student-roll {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--gray-600);
+    margin-top: 1px;
+  }
+  .student-score {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    color: var(--gray-600);
+    text-align: right;
+  }
+  .student-score.absent { color: var(--gray-500); font-style: italic; }
+  .student-score.flagged { color: var(--brand-orange); }
+  .student-score .denom { color: var(--gray-500); }
+
+  /* Collapsed-only row variant */
+  .leftpanel.collapsed .student-row {
+    grid-template-columns: 1fr;
+    padding: 4px 8px;
+    border-left: none;
+    justify-items: center;
+    background: transparent !important;
+  }
+  .leftpanel.collapsed .student-row .student-meta,
+  .leftpanel.collapsed .student-row .student-score,
+  .leftpanel.collapsed .student-row > .dot { display: none; }
+  .leftpanel.collapsed .student-row .initials { display: inline-flex; }
+
+  .initials {
+    display: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--gray-100); color: var(--gray-600);
+    align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    position: relative;
+    transition: background .12s, color .12s, box-shadow .12s;
+  }
+  .leftpanel.collapsed .student-row:hover .initials {
+    background: var(--gray-200);
+  }
+  .leftpanel.collapsed .student-row.active .initials {
+    background: var(--brand-blue); color: #fff;
+    box-shadow: 0 0 0 3px var(--brand-blue-soft);
+  }
+  .initials .corner-dot {
+    position: absolute; bottom: -1px; right: -1px;
+    width: 9px; height: 9px; border-radius: 50%;
+    border: 1.5px solid #fff;
+    background: var(--gray-300);
+  }
+  .initials .corner-dot.in-progress { background: var(--brand-blue); }
+  .initials .corner-dot.reviewed { background: var(--success); }
+  .initials .corner-dot.flagged { background: var(--brand-orange); }
+  .initials .corner-dot.absent { background: var(--gray-400); }
+
+  .lp-footer {
+    padding: 12px 14px;
+    border-top: 1px solid var(--gray-200);
+    background: #fff;
+  }
+  .leftpanel.collapsed .lp-footer { padding: 12px 8px; }
+  .leftpanel.collapsed .lp-footer .btn-label { display: none; }
+  .leftpanel.collapsed .lp-footer .btn { padding: 0; }
+
+  /* ---- BUTTONS ---- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius-btn);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border: 1px solid transparent;
+    transition: background .15s, border-color .15s, color .15s, box-shadow .15s;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--brand-blue); color: #fff; }
+  .btn-primary:hover { background: #176bcb; }
+  .btn-terminal { background: var(--brand-orange); color: #fff; }
+  .btn-terminal:hover { background: #db691a; }
+  .btn-secondary { background: #fff; color: var(--gray-700); border-color: var(--gray-200); }
+  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-300); }
+  .btn-ghost { background: transparent; color: var(--gray-600); }
+  .btn-ghost:hover { background: var(--gray-100); color: var(--gray-700); }
+  .btn:disabled, .btn-disabled {
+    background: var(--gray-100); color: var(--gray-400);
+    border-color: transparent; cursor: not-allowed;
+  }
+  .btn-full { width: 100%; }
+
+  /* ============ WORKSPACE ============ */
+  .workspace {
+    flex: 1;
+    min-width: 0;
+    display: flex; flex-direction: column;
+    height: calc(100vh - 52px);
+  }
+
+  /* ---- WORKSPACE HEADER ---- */
+  .ws-header {
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 18px 28px;
+    display: flex; align-items: center;
+    gap: 24px;
+  }
+
+  /* ---- FINAL REVIEW HEADER (repurposed ws-header) ---- */
+  .fr-header {
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .fr-id {
+    display: flex; align-items: center; gap: 14px;
+    min-width: 0;
+  }
+  .fr-title {
+    margin: 0;
+    font-size: 22px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.015em;
+  }
+  .fr-sub {
+    margin-top: 3px;
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .fr-score {
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .fr-total {
+    font-size: 15px; font-weight: 600;
+    color: var(--gray-700);
+    display: flex; align-items: baseline; gap: 6px;
+    justify-content: flex-end;
+  }
+  .fr-total .num {
+    font-family: var(--font-mono);
+    font-size: 28px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.02em;
+  }
+  .fr-total .num .denom { color: var(--gray-500); font-size: 18px; font-weight: 500; }
+  .fr-delta {
+    margin-top: 5px;
+    font-size: 12.5px;
+    color: var(--gray-600);
+    display: flex; align-items: center; gap: 4px;
+    justify-content: flex-end;
+  }
+  .fr-delta svg { color: var(--success); }
+
+  /* Big running total (sits at far right, after progress bar) */
+  .ws-total {
+    display: flex; flex-direction: column;
+    flex-shrink: 0;
+    align-items: flex-end;
+    padding-left: 20px;
+    border-left: 1px solid var(--gray-200);
+  }
+  .ws-total .label {
+    font-size: 11px; font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ws-total .value {
+    font-family: var(--font-mono);
+    font-size: 28px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    display: inline-flex; align-items: baseline; gap: 2px;
+  }
+  .ws-total .value .denom {
+    font-size: 18px;
+    color: var(--gray-500);
+    font-weight: 500;
+  }
+
+  .ws-student {
+    display: flex; align-items: center; gap: 12px;
+    min-width: 0;
+  }
+  .ws-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--brand-blue-soft);
+    color: var(--brand-blue);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 14px;
+    flex-shrink: 0;
+  }
+  .ws-id { min-width: 0; }
+  .ws-id .name-row {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ws-id .name {
+    font-size: 18px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.005em;
+  }
+  .ws-id .meta {
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--gray-500);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ws-id .meta .roll {
+    font-family: var(--font-mono);
+    color: var(--gray-500);
+  }
+  .ws-id .meta .dot-sep { color: var(--gray-300); }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .pill::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: currentColor;
+  }
+  .pill.success { background: var(--success-soft); color: #15803d; }
+  .pill.warning { background: var(--warning-soft); color: #b45309; }
+  .pill.info { background: var(--brand-blue-soft); color: #1456a8; }
+  .pill.neutral { background: var(--gray-100); color: var(--gray-500); }
+
+  /* Right-side cluster: running total + progress */
+  .ws-right {
+    margin-left: auto;
+    display: flex; align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  /* Simple grading-progress block */
+  .ws-progress {
+    display: flex; flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    min-width: 240px;
+    flex-shrink: 0;
+  }
+  .ws-progress .head {
+    display: flex; align-items: baseline; gap: 6px;
+    font-size: 12px; color: var(--gray-500);
+  }
+  .ws-progress .head .count {
+    font-family: var(--font-mono);
+    font-size: 14px; font-weight: 600;
+    color: var(--gray-900);
+  }
+  .ws-progress .head .denom { color: var(--gray-500); font-weight: 500; }
+  .ws-progress .bar {
+    width: 280px; height: 6px;
+    background: var(--gray-100);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .ws-progress .bar .fill {
+    height: 100%;
+    background: var(--success);
+    border-radius: 999px;
+  }
+
+  /* ---- QUESTION NAV (inside content area) ---- */
+  .q-nav-bar {
+    display: flex; align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    margin-bottom: 16px;
+  }
+  .q-nav-bar .q-title {
+    display: flex; align-items: baseline; gap: 8px;
+    min-width: 0;
+  }
+  .q-nav-bar .q-num {
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 600;
+    color: var(--gray-900);
+    padding: 3px 8px;
+    background: var(--gray-100);
+    border-radius: 4px;
+  }
+  .q-nav-bar .q-name {
+    font-size: 14px; font-weight: 600;
+    color: var(--gray-700);
+  }
+  .q-nav-bar .q-marks {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+  .q-nav-bar .q-controls {
+    margin-left: auto;
+    display: flex; align-items: center;
+    gap: 4px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-btn);
+    padding: 2px;
+  }
+  .q-nav-bar .q-controls .icon-btn { width: 28px; height: 28px; color: var(--gray-600); }
+  .q-nav-bar .q-controls .icon-btn:hover { background: #fff; color: var(--gray-900); }
+  .q-nav-bar .q-controls .qjump {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--gray-700);
+    padding: 0 10px;
+    min-width: 64px;
+    text-align: center;
+  }
+  .q-nav-bar .q-kbd {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-left: 4px;
+  }
+  .q-nav-bar .q-kbd kbd {
+    background: var(--gray-100);
+    padding: 1px 5px; border-radius: 3px;
+    color: var(--gray-500);
+    font-family: inherit;
+  }
+
+  /* ---- FINAL REVIEW CONTENT ---- */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px 28px;
+    background: var(--gray-50);
+  }
+  .content::-webkit-scrollbar { width: 8px; }
+  .content::-webkit-scrollbar-thumb { background: var(--gray-200); border-radius: 4px; }
+  .review-wrap { max-width: 1040px; margin: 0 auto; }
+
+  /* Summary stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .stat-card {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-card);
+    padding: 16px;
+  }
+  .stat-card .stat-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .stat-card .stat-value {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 26px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .stat-card .stat-value .denom { color: var(--gray-500); font-size: 17px; font-weight: 500; }
+  .stat-card .stat-sub {
+    margin-top: 7px;
+    font-size: 12.5px;
+    color: var(--gray-600);
+  }
+
+  /* Question-by-question table */
+  .grid-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .q-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .q-table {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    align-self: start;
+  }
+  .q-thead, .q-row {
+    display: grid;
+    grid-template-columns: 44px 1fr 64px 96px 28px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+  }
+  .q-thead {
+    height: 26px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 9.5px; font-weight: 600;
+    color: var(--gray-500);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .q-thead .col-score { text-align: right; }
+  .q-row {
+    height: 27px;
+    border-bottom: 1px solid var(--gray-100);
+    border-left: 3px solid transparent;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background .1s;
+  }
+  .q-tbody .q-row:last-child { border-bottom: none; }
+  .q-row:hover { background: var(--gray-50); }
+  .q-row .cell-q {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 600;
+    color: var(--gray-600);
+  }
+  .q-row .cell-topic {
+    color: var(--gray-700);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .q-row .cell-score {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--gray-900);
+    text-align: right;
+  }
+  .q-row .cell-score .denom { color: var(--gray-500); font-weight: 500; }
+  .q-row.zero .cell-score { color: var(--danger); }
+  .q-row.pending .cell-score { color: var(--gray-400); }
+  .q-row .cell-note {
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--brand-blue);
+  }
+
+  /* status left border */
+  .q-row.full    { border-left-color: var(--success); }
+  .q-row.partial { border-left-color: var(--brand-orange); }
+  .q-row.zero    { border-left-color: var(--danger); }
+  .q-row.pending { border-left-color: var(--gray-300); }
+
+  /* total row (spans full width below both columns) */
+  .q-total-row {
+    margin-top: 14px;
+    display: flex; align-items: center;
+    justify-content: flex-end; gap: 14px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-card);
+  }
+  .q-total-row .total-label {
+    font-size: 11px; font-weight: 600;
+    color: var(--gray-700);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .q-total-row .total-score {
+    font-family: var(--font-mono);
+    font-size: 18px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.01em;
+  }
+  .q-total-row .total-score .denom { color: var(--gray-500); font-size: 13px; font-weight: 500; }
+
+  .qpill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .qpill::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+  .qpill.reviewed { background: var(--success-soft); color: #15803d; }
+  .qpill.notreviewed { background: var(--gray-100); color: var(--gray-500); }
+
+  /* ---- Sticky action bar ---- */
+  .action-bar {
+    flex-shrink: 0;
+    background: #fff;
+    border-top: 1px solid var(--gray-200);
+    padding: 12px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+  .action-bar .ab-left { justify-self: start; }
+  .action-bar .ab-center {
+    justify-self: center;
+    display: flex; gap: 14px;
+    font-size: 11.5px; color: var(--gray-600);
+    align-items: center;
+  }
+  .action-bar .ab-center kbd {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 1px 5px;
+    background: var(--gray-100);
+    border-radius: 3px;
+    color: var(--gray-700);
+    margin-right: 3px;
+  }
+  .action-bar .ab-right {
+    justify-self: end;
+    display: flex; flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+  .action-bar .ab-right .pending-note {
+    font-size: 11.5px;
+    color: var(--gray-600);
+  }
+  .btn-lg { height: 40px; padding: 0 18px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <span class="wordmark">Narayana</span>
+  <nav class="breadcrumb">
+    <span>Class XII-A</span>
+    <span class="sep">/</span>
+    <span class="current">Maths Pre-Board 1</span>
+  </nav>
+  <div class="topbar-right">
+    <div class="search" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <span>Search students, questions…</span>
+      <span class="kbd">⌘K</span>
+    </div>
+    <button class="icon-btn" aria-label="Notifications">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+      <span class="badge"></span>
+    </button>
+    <button class="icon-btn" aria-label="Help">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><path d="M12 17h.01"></path></svg>
+    </button>
+    <div class="avatar" title="Anita Rao">AR</div>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ============ LEFT PANEL ============ -->
+  <aside class="leftpanel" id="leftpanel" aria-label="Student list">
+    <div class="lp-header">
+      <div class="lp-header-top">
+        <div class="lp-title">
+          <span class="subject-dot"></span>
+          Class XII-A · Maths
+        </div>
+        <button class="lp-toggle" id="lp-toggle" aria-label="Collapse student panel" title="Collapse panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+        </button>
+      </div>
+      <div class="lp-progress-block">
+        <div class="lp-progress-meta">
+          <span class="lp-progress-text">Reviewed</span>
+          <span class="lp-progress-count">12 of 30</span>
+        </div>
+        <div class="lp-progressbar"><div class="fill"></div></div>
+      </div>
+      <div class="lp-search-wrap">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+        <input class="lp-search" placeholder="Search students…" />
+      </div>
+    </div>
+
+    <div class="lp-list" id="lp-list"></div>
+
+    <div class="lp-footer">
+      <button class="btn btn-terminal btn-full" disabled title="Submit all & continue (enabled when all 30 are reviewed)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 5 7 7-7 7"></path><path d="M5 12h14"></path></svg>
+        <span class="btn-label">Submit all &amp; continue</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============ WORKSPACE ============ -->
+  <section class="workspace">
+
+    <!-- ============ FINAL REVIEW HEADER ============ -->
+    <div class="ws-header fr-header">
+      <div class="fr-id">
+        <div class="ws-avatar" id="fr-avatar">SA</div>
+        <div>
+          <h1 class="fr-title" id="fr-title">Tanish Arora · Final Review</h1>
+          <div class="fr-sub" id="fr-sub">Maths Pre-Board 1 · 0 of 38 questions reviewed</div>
+        </div>
+      </div>
+      <div class="fr-score">
+        <div class="fr-total">Total: <span class="num" id="fr-total-num">67<span class="denom">/80</span></span></div>
+        <div class="fr-delta" id="fr-delta">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>
+          Top quartile
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CONTENT — final review ============ -->
+    <div class="content">
+      <div class="review-wrap">
+
+        <!-- Question-by-question table (two columns) -->
+        <div class="grid-label">Question-by-question review</div>
+        <div class="q-cols">
+          <div class="q-table">
+            <div class="q-thead">
+              <span>Q#</span>
+              <span>Topic</span>
+              <span class="col-score">Score</span>
+              <span>Status</span>
+              <span></span>
+            </div>
+            <div class="q-tbody" id="q-tbody-a"></div>
+          </div>
+          <div class="q-table">
+            <div class="q-thead">
+              <span>Q#</span>
+              <span>Topic</span>
+              <span class="col-score">Score</span>
+              <span>Status</span>
+              <span></span>
+            </div>
+            <div class="q-tbody" id="q-tbody-b"></div>
+          </div>
+        </div>
+        <div class="q-total-row">
+          <span class="total-label">Total marks</span>
+          <span class="total-score" id="fr-grandtotal">67<span class="denom">/80</span></span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ STICKY ACTION BAR ============ -->
+    <div class="action-bar">
+      <div class="ab-left">
+        <button class="btn btn-ghost" id="back-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+          Back to grading
+        </button>
+      </div>
+      <div class="ab-center">
+        <span><kbd>↵</kbd>submit</span>
+        <span><kbd>⌫</kbd>back</span>
+      </div>
+      <div class="ab-right">
+        <button class="btn btn-primary btn-lg" id="submit-btn" disabled>
+          Submit &amp; continue to next student
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </button>
+        <span class="pending-note" id="pending-note">38 questions still pending — review to enable submit</span>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<script>
+/* ---- Collapse toggle ---- */
+const lp = document.getElementById('leftpanel');
+const toggle = document.getElementById('lp-toggle');
+toggle.addEventListener('click', () => {
+  lp.classList.toggle('collapsed');
+  const isCollapsed = lp.classList.contains('collapsed');
+  toggle.setAttribute('aria-label', isCollapsed ? 'Expand student panel' : 'Collapse student panel');
+  toggle.setAttribute('title', isCollapsed ? 'Expand panel' : 'Collapse panel');
+});
+
+</script>
+
+<!-- ============ LOAM state wiring ============ -->
+<script src="loam-store.js"></script>
+<script src="loam-panel.js"></script>
+<script src="loam-chrome.js"></script>
+<style>
+  .loam-success-scrim {
+    position: fixed; inset: 0; z-index: 2000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 18px;
+    background: linear-gradient(180deg, #EAF3FF 0%, #F6FAFF 60%, #fff 100%);
+    opacity: 0; transition: opacity .25s;
+  }
+  .loam-success-scrim.show { opacity: 1; }
+  .loam-success-check {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: var(--success); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    transform: scale(0);
+    box-shadow: 0 12px 32px rgba(22,163,74,0.32);
+  }
+  .loam-success-check.pop { animation: loamPop .42s cubic-bezier(.34,1.56,.64,1) forwards; }
+  @keyframes loamPop { 0%{transform:scale(0);} 70%{transform:scale(1.12);} 100%{transform:scale(1);} }
+  .loam-success-title { font-size: 30px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.02em; }
+  .loam-success-sub { font-size: 14px; color: var(--gray-600); font-family: var(--font-mono); }
+  .q-row { cursor: pointer; }
+  .q-row .qpill { white-space: nowrap; }
+  .q-row { min-height: 34px; }
+</style>
+<script>
+/* ============================================================
+   Screen 6 controller — final review from the LOAM store.
+   ============================================================ */
+(function () {
+  window.LOAM.ready.then(function () {
+    var S = window.LOAM;
+    function $(id) { return document.getElementById(id); }
+    function fmt(n) { return Number.isInteger(n) ? String(n) : (Math.round(n * 10) / 10).toString(); }
+    var COMMENT_ICON = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>';
+    var UP = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"></path><path d="m5 12 7-7 7 7"></path></svg>';
+
+    function topicFor(name, code) {
+      var q = S.data.questionsByCode[code];
+      if (!q) return code;
+      if (q.section === 'A') return 'Section A · MCQ';
+      if (q.has_or_variant && q.variants) {
+        var sc = S.scoreFor(name, code); var v = (sc && sc.variant_attempted) || 'A';
+        var vv = q.variants.filter(function (x){ return x.variant === v; })[0] || q.variants[0];
+        return (vv && (vv.concept || vv.chapter)) || q.concept || q.chapter || code;
+      }
+      return q.concept || q.chapter || code;
+    }
+    function noteFor(name, code) {
+      var e = S.state.reviewState[name] && S.state.reviewState[name].questionsEdited[code];
+      return e && e.teacherNote && e.teacherNote.trim();
+    }
+
+    function renderHeader() {
+      var name = S.state.currentStudent;
+      var rec = S.studentRecord(name); if (!rec) return;
+      $('fr-avatar').textContent = rec.initials || '';
+      $('fr-title').textContent = rec.name + ' · Final Review';
+      var codes = S.questionCodes();
+      var reviewed = codes.filter(function (c){ return S.isReviewed(name, c); }).length;
+      $('fr-sub').textContent = 'Maths Pre-Board 1 · ' + reviewed + ' of ' + codes.length + ' questions reviewed';
+      var sum = 0; codes.forEach(function (c){ sum += S.questionTotal(name, c); });
+      $('fr-total-num').innerHTML = fmt(sum) + '<span class="denom">/' + rec.max_marks + '</span>';
+      $('fr-grandtotal').innerHTML = fmt(sum) + '<span class="denom">/' + rec.max_marks + '</span>';
+      $('fr-delta').innerHTML = UP + ' ' + (rec.peer_label || '') + ' · Rank ' + rec.rank_in_class + ' of ' + rec.class_size;
+    }
+
+    function rowHTML(name, code) {
+      var q = S.data.questionsByCode[code];
+      var max = q.max_marks;
+      var score = S.questionTotal(name, code);
+      var reviewed = S.isReviewed(name, code);
+      var statusClass = !reviewed ? 'pending' : (score >= max ? 'full' : (score > 0 ? 'partial' : 'zero'));
+      var pill = reviewed ? 'reviewed' : 'notreviewed';
+      var pillText = reviewed ? 'Reviewed' : 'Not reviewed';
+      var note = noteFor(name, code);
+      return '<div class="q-row ' + statusClass + '" data-q="' + code + '">' +
+               '<span class="cell-q">' + code + '</span>' +
+               '<span class="cell-topic">' + topicFor(name, code) + '</span>' +
+               '<span class="cell-score">' + fmt(score) + '<span class="denom">/' + max + '</span></span>' +
+               '<span><span class="qpill ' + pill + '">' + pillText + '</span></span>' +
+               '<span class="cell-note" title="' + (note ? 'Teacher comment added' : '') + '">' + (note ? COMMENT_ICON : '') + '</span>' +
+             '</div>';
+    }
+
+    function renderTable() {
+      var name = S.state.currentStudent;
+      var codes = S.questionCodes();
+      var half = Math.ceil(codes.length / 2);
+      var a = '', b = '';
+      codes.forEach(function (code, i) {
+        var html = rowHTML(name, code);
+        if (i < half) a += html; else b += html;
+      });
+      $('q-tbody-a').innerHTML = a;
+      $('q-tbody-b').innerHTML = b;
+      document.querySelectorAll('.q-row').forEach(function (row) {
+        row.addEventListener('click', function () {
+          var code = row.dataset.q;
+          var q = S.data.questionsByCode[code];
+          if (q && q.section === 'A') { window.location.href = 'screen-4-mcq.html'; return; }
+          S.goToQuestion(code);
+          window.location.href = 'screen-5-grading.html';
+        });
+      });
+    }
+
+    function renderSubmit() {
+      var name = S.state.currentStudent;
+      var codes = S.questionCodes();
+      var reviewed = codes.filter(function (c){ return S.isReviewed(name, c); }).length;
+      var pending = codes.length - reviewed;
+      var btn = $('submit-btn');
+      var submitted = S.state.reviewState[name] && S.state.reviewState[name].submitted;
+      btn.disabled = pending > 0 || submitted;
+      $('pending-note').textContent = submitted
+        ? 'Submitted — marks committed.'
+        : (pending > 0 ? (pending + ' question' + (pending===1?'':'s') + ' still pending — review to enable submit')
+                       : 'All ' + codes.length + ' reviewed — ready to submit.');
+    }
+
+    function nextUnsubmitted(exclude) {
+      var students = S.data.students;
+      for (var i = 0; i < students.length; i++) {
+        var s = students[i];
+        if (s.name === exclude) continue;
+        if (s.attended === false) continue;
+        var rs = S.state.reviewState[s.name];
+        if (!(rs && rs.submitted)) return s.name;
+      }
+      return null;
+    }
+
+    function showSuccess(name) {
+      var rec = S.studentRecord(name);
+      var sum = 0; S.questionCodes().forEach(function (c){ sum += S.questionTotal(name, c); });
+      var scrim = document.createElement('div');
+      scrim.className = 'loam-success-scrim';
+      scrim.innerHTML =
+        '<div class="loam-success-check"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>' +
+        '<div class="loam-success-title">Submitted</div>' +
+        '<div class="loam-success-sub">' + rec.name + ' · ' + fmt(sum) + '/' + rec.max_marks + ' · Marks committed</div>';
+      document.body.appendChild(scrim);
+      requestAnimationFrame(function () {
+        scrim.classList.add('show');
+        scrim.querySelector('.loam-success-check').classList.add('pop');
+      });
+      setTimeout(function () {
+        var next = nextUnsubmitted(name);
+        if (next) { S.goToStudent(next); window.location.href = 'screen-4-mcq.html'; }
+        else { window.location.href = 'screen-7-class-complete.html'; }
+      }, 1600);
+    }
+
+    $('submit-btn').addEventListener('click', function () {
+      if ($('submit-btn').disabled) return;
+      var name = S.state.currentStudent;
+      S.submitStudent(name);
+      showSuccess(name);
+    });
+    $('back-btn').addEventListener('click', function () { window.location.href = 'screen-5-grading.html'; });
+
+    function renderAll() { renderHeader(); renderTable(); renderSubmit(); }
+    renderAll();
+    S.subscribe(renderAll);
+  });
+})();
+</script>
+<script src="pm-notes.js"></script>
+</body>
+</html>

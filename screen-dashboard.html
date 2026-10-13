@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1440, initial-scale=1.0" />
+<title>LOAM · Class Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --brand-blue: #1E7CE8;
+    --brand-blue-soft: #E8F2FF;
+    --brand-orange: #F37920;
+    --brand-orange-soft: #FFF1E5;
+    --subject-maths: #F4A04A;
+
+    --gray-50:  #FAFAF9;
+    --gray-100: #F4F4F2;
+    --gray-200: #E7E5E0;
+    --gray-300: #D4D2CC;
+    --gray-400: #A8A6A0;
+    --gray-500: #6B6964;
+    --gray-600: #4A4844;
+    --gray-700: #2C2A26;
+    --gray-900: #0F0E0C;
+
+    --success: #16A34A;
+    --success-soft: #DCFCE7;
+
+    --radius-card: 10px;
+    --radius-btn: 6px;
+    --radius-input: 6px;
+
+    --shadow-card: 0 1px 2px rgba(15,14,12,0.04), 0 0 0 1px rgba(15,14,12,0.06);
+
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--gray-700);
+    background: var(--gray-50);
+    font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-width: 1100px;
+  }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+  input { font-family: inherit; }
+
+  /* ===== Top bar ===== */
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    height: 52px; background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center; padding: 0 20px;
+  }
+  .wordmark { font-weight: 600; color: var(--brand-orange); font-size: 15px; letter-spacing: -0.01em; }
+  .breadcrumb { margin-left: 16px; color: var(--gray-500); font-size: 13px; font-weight: 500; display: flex; align-items: center; }
+  .breadcrumb .sep { color: var(--gray-300); margin: 0 8px; }
+  .breadcrumb .current { color: var(--gray-700); }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+  .search-top {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-100); border: 1px solid transparent;
+    border-radius: var(--radius-input); padding: 6px 10px; width: 240px;
+    font-size: 13px; color: var(--gray-500);
+  }
+  .search-top .kbd { margin-left: auto; font-family: var(--font-mono); font-size: 11px; padding: 1px 6px; background: #fff; border: 1px solid var(--gray-200); border-radius: 4px; color: var(--gray-500); }
+  .icon-btn { width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-btn); color: var(--gray-500); position: relative; }
+  .icon-btn:hover { background: var(--gray-100); color: var(--gray-700); }
+  .icon-btn .badge { position: absolute; top: 6px; right: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-orange); border: 1.5px solid #fff; }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--brand-blue-soft); color: var(--brand-blue); display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 12px; }
+
+  /* ===== Page ===== */
+  .page { max-width: 1080px; margin: 0 auto; padding: 28px 40px 56px; }
+  .page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+  .page-head h1 { margin: 0; font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.02em; }
+  .page-head .sub { margin-top: 4px; font-size: 13px; color: var(--gray-600); }
+  .exam-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--gray-600); background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-btn); padding: 5px 10px; }
+  .exam-tag .swatch { width: 8px; height: 8px; border-radius: 2px; background: var(--subject-maths); }
+
+  /* ===== Summary stats ===== */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+  .stat { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-card); padding: 14px 16px; }
+  .stat .label { font-size: 11px; font-weight: 600; color: var(--gray-500); letter-spacing: 0.06em; text-transform: uppercase; }
+  .stat .value { margin-top: 7px; font-family: var(--font-mono); font-size: 24px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.01em; line-height: 1; }
+  .stat .value .denom { font-size: 15px; color: var(--gray-500); font-weight: 500; }
+  .stat .meta { margin-top: 5px; font-size: 12px; color: var(--gray-600); }
+  .stat .meta strong { color: var(--gray-900); font-weight: 600; }
+  .stat.review .value { color: var(--brand-blue); }
+  .stat .mini-bar { margin-top: 8px; height: 4px; background: var(--gray-100); border-radius: 999px; overflow: hidden; }
+  .stat .mini-bar .fill { height: 100%; background: var(--brand-blue); border-radius: 999px; width: 0%; transition: width .3s; }
+
+  /* ===== Toolbar (filters + search) ===== */
+  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+  .filters { display: flex; gap: 2px; background: var(--gray-100); border-radius: var(--radius-btn); padding: 3px; }
+  .filter-tab {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 5px;
+    font-size: 13px; font-weight: 600; color: var(--gray-600);
+    transition: background .12s, color .12s;
+  }
+  .filter-tab:hover { color: var(--gray-900); }
+  .filter-tab.active { background: #fff; color: var(--gray-900); box-shadow: 0 1px 2px rgba(15,14,12,0.06); }
+  .filter-tab .pill-count {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    color: var(--gray-500); background: var(--gray-200); border-radius: 999px;
+    padding: 1px 7px;
+  }
+  .filter-tab.active .pill-count { background: var(--brand-blue-soft); color: var(--brand-blue); }
+
+  .search-wrap { position: relative; width: 260px; }
+  .search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--gray-400); }
+  .search-input {
+    width: 100%; background: #fff; border: 1px solid var(--gray-200);
+    border-radius: var(--radius-input); padding: 8px 10px 8px 32px;
+    font-size: 13px; color: var(--gray-700); outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .search-input::placeholder { color: var(--gray-400); }
+  .search-input:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--brand-blue-soft); }
+
+  /* ===== Student table ===== */
+  .table { background: #fff; border: 1px solid var(--gray-200); border-radius: var(--radius-card); overflow: hidden; }
+  .thead, .trow {
+    display: grid;
+    grid-template-columns: 20px 1fr 90px 130px 116px;
+    gap: 14px; align-items: center;
+    padding: 0 18px;
+  }
+  .thead {
+    height: 40px; background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 11px; font-weight: 600; color: var(--gray-500);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .thead .col-score { text-align: right; }
+  .trow {
+    height: 56px; border-bottom: 1px solid var(--gray-100);
+    cursor: pointer; transition: background .1s;
+  }
+  .trow:last-child { border-bottom: none; }
+  .trow:hover { background: var(--gray-50); }
+  .trow.absent { cursor: default; opacity: 0.7; }
+  .trow.absent:hover { background: transparent; }
+
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray-300); }
+  .dot.in-progress { background: var(--brand-blue); }
+  .dot.reviewed { background: var(--success); }
+  .dot.absent { background: transparent; border: 1px dashed var(--gray-400); }
+
+  .s-name { display: flex; align-items: center; gap: 11px; min-width: 0; }
+  .s-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--gray-100); color: var(--gray-600); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+  .trow:hover .s-avatar { background: var(--brand-blue-soft); color: var(--brand-blue); }
+  .trow.absent .s-avatar, .trow.absent:hover .s-avatar { background: var(--gray-100); color: var(--gray-500); }
+  .s-id { min-width: 0; }
+  .s-id .nm { font-size: 14px; font-weight: 500; color: var(--gray-900); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .s-id .rl { font-family: var(--font-mono); font-size: 11px; color: var(--gray-500); margin-top: 1px; }
+
+  .s-score { font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--gray-900); text-align: right; }
+  .s-score .denom { color: var(--gray-500); font-weight: 500; font-size: 12px; }
+  .s-score.absent { color: var(--gray-400); font-style: italic; font-weight: 500; font-size: 12px; }
+
+  .pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.6; white-space: nowrap; }
+  .pill::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .pill.success { background: var(--success-soft); color: #15803d; }
+  .pill.info { background: var(--brand-blue-soft); color: #1456a8; }
+  .pill.neutral { background: var(--gray-100); color: var(--gray-600); }
+  .pill.absent { background: transparent; color: var(--gray-500); border: 1px dashed var(--gray-300); }
+  .pill.absent::before { display: none; }
+
+  .review-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    height: 30px; padding: 0 12px; border-radius: var(--radius-btn);
+    font-size: 12.5px; font-weight: 600; white-space: nowrap;
+    background: #fff; color: var(--gray-700); border: 1px solid var(--gray-200);
+    transition: background .12s, border-color .12s, color .12s;
+  }
+  .trow:hover .review-btn { background: var(--brand-blue); color: #fff; border-color: transparent; }
+  .review-btn.submitted { background: transparent; border-color: transparent; color: var(--gray-500); }
+  .trow:hover .review-btn.submitted { background: var(--gray-100); color: var(--gray-700); }
+  .review-btn:disabled { color: var(--gray-400); background: transparent; border-color: transparent; cursor: default; }
+
+  .empty { padding: 40px; text-align: center; color: var(--gray-500); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="wordmark">Narayana</span>
+  <nav class="breadcrumb">
+    <span>Class XII-A</span>
+    <span class="sep">/</span>
+    <span class="current">Maths Pre-Board 1</span>
+  </nav>
+  <div class="topbar-right">
+    <div class="search-top" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <span>Search…</span>
+      <span class="kbd">⌘K</span>
+    </div>
+    <button class="icon-btn" aria-label="Notifications">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+      <span class="badge"></span>
+    </button>
+    <div class="avatar" title="Anita Rao">AR</div>
+  </div>
+</header>
+
+<div class="page">
+
+  <div class="page-head">
+    <div>
+      <h1>Class Review</h1>
+      <div class="sub">Pick a student to review, or jump back in where you left off.</div>
+    </div>
+    <span class="exam-tag"><span class="swatch"></span> Maths Pre-Board 1 · Class XII-A · 80 marks</span>
+  </div>
+
+  <!-- Summary -->
+  <div class="stats">
+    <div class="stat">
+      <div class="label">Papers graded</div>
+      <div class="value" id="stat-graded">—</div>
+      <div class="meta" id="stat-graded-meta">—</div>
+    </div>
+    <div class="stat">
+      <div class="label">Class average</div>
+      <div class="value" id="stat-avg">—<span class="denom">/80</span></div>
+      <div class="meta" id="stat-avg-meta">across graded papers</div>
+    </div>
+    <div class="stat">
+      <div class="label">Top scorer</div>
+      <div class="value" id="stat-top">—</div>
+      <div class="meta" id="stat-top-meta">—</div>
+    </div>
+    <div class="stat review">
+      <div class="label">Reviewed by you</div>
+      <div class="value" id="stat-rev">—<span class="denom">/30</span></div>
+      <div class="mini-bar"><div class="fill" id="stat-rev-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="filters" id="filters">
+      <button class="filter-tab active" data-filter="all">All <span class="pill-count" id="cnt-all">0</span></button>
+      <button class="filter-tab" data-filter="needs">Needs review <span class="pill-count" id="cnt-needs">0</span></button>
+      <button class="filter-tab" data-filter="in_progress">In progress <span class="pill-count" id="cnt-progress">0</span></button>
+      <button class="filter-tab" data-filter="submitted">Submitted <span class="pill-count" id="cnt-submitted">0</span></button>
+    </div>
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <input class="search-input" id="name-search" placeholder="Search students by name…" />
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table">
+    <div class="thead">
+      <span></span>
+      <span>Student</span>
+      <span class="col-score">Total</span>
+      <span>Status</span>
+      <span></span>
+    </div>
+    <div id="trows"></div>
+  </div>
+
+</div>
+
+<!-- ============ LOAM state wiring ============ -->
+<script src="loam-store.js"></script>
+<script src="loam-chrome.js"></script>
+<script>
+(function () {
+  window.LOAM.ready.then(function () {
+    var S = window.LOAM;
+    function $(id) { return document.getElementById(id); }
+    function fmt(n) { return n == null ? '—' : (Number.isInteger(n) ? String(n) : (Math.round(n * 10) / 10).toString()); }
+
+    var DOT = { submitted: 'reviewed', in_progress: 'in-progress', currently_grading: 'in-progress', graded: '', queued: '', absent: 'absent' };
+
+    function statusOf(s) {
+      if (s.attended === false) return 'absent';
+      return S.studentStatus(s.name);
+    }
+    // collapse store statuses into the dashboard's review buckets
+    function bucket(st) {
+      if (st === 'absent') return 'absent';
+      if (st === 'submitted') return 'submitted';
+      if (st === 'in_progress') return 'in_progress';
+      return 'needs'; // graded / queued / not-yet-reviewed
+    }
+    function pillFor(bk) {
+      if (bk === 'submitted') return '<span class="pill success">Submitted</span>';
+      if (bk === 'in_progress') return '<span class="pill info">In progress</span>';
+      if (bk === 'absent') return '<span class="pill absent">Absent</span>';
+      return '<span class="pill neutral">Not reviewed</span>';
+    }
+
+    var state = { filter: 'all', q: '' };
+
+    function summary() {
+      var students = S.data.students;
+      var graded = students.filter(function (s){ return s.attended !== false; });
+      var absent = students.length - graded.length;
+      $('stat-graded').textContent = graded.length;
+      $('stat-graded-meta').innerHTML = absent ? ('<strong>' + absent + '</strong> absent · ' + students.length + ' on roll') : (students.length + ' on roll');
+      var avg = graded.reduce(function (a, s){ return a + s.total_marks; }, 0) / (graded.length || 1);
+      $('stat-avg').innerHTML = fmt(Math.round(avg * 10) / 10) + '<span class="denom">/80</span>';
+      var top = graded.slice().sort(function (a, b){ return b.total_marks - a.total_marks; })[0];
+      if (top) { $('stat-top').textContent = top.name.split(' ')[0]; $('stat-top-meta').innerHTML = '<strong>' + fmt(top.total_marks) + '/80</strong> · ' + top.name; }
+      var reviewed = students.filter(function (s){ var rs = S.state.reviewState[s.name]; return rs && rs.submitted; }).length;
+      $('stat-rev').innerHTML = reviewed + '<span class="denom">/' + students.length + '</span>';
+      $('stat-rev-bar').style.width = (reviewed / students.length * 100) + '%';
+    }
+
+    function counts() {
+      var students = S.data.students;
+      var c = { all: students.length, needs: 0, in_progress: 0, submitted: 0 };
+      students.forEach(function (s){ var bk = bucket(statusOf(s)); if (c[bk] != null) c[bk]++; });
+      $('cnt-all').textContent = c.all;
+      $('cnt-needs').textContent = c.needs;
+      $('cnt-progress').textContent = c.in_progress;
+      $('cnt-submitted').textContent = c.submitted;
+    }
+
+    function rowHTML(s) {
+      var st = statusOf(s);
+      var bk = bucket(st);
+      var dot = DOT[st] || '';
+      var scoreHTML = bk === 'absent'
+        ? '<span class="s-score absent">Absent</span>'
+        : '<span class="s-score">' + fmt(s.total_marks) + '<span class="denom">/80</span></span>';
+      var btn;
+      if (bk === 'absent') btn = '<button class="review-btn" disabled>—</button>';
+      else if (bk === 'submitted') btn = '<button class="review-btn submitted">View</button>';
+      else btn = '<button class="review-btn">' + (bk === 'in_progress' ? 'Resume' : 'Review') +
+                 ' <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>';
+      return '<div class="trow ' + (bk === 'absent' ? 'absent' : '') + '" data-student="' + s.name.replace(/"/g,'&quot;') + '" data-bucket="' + bk + '">' +
+               '<span class="dot ' + dot + '"></span>' +
+               '<div class="s-name"><span class="s-avatar">' + (s.initials || '') + '</span>' +
+                 '<div class="s-id"><div class="nm">' + s.name + '</div><div class="rl">Roll ' + s.roll_number + '</div></div></div>' +
+               scoreHTML +
+               '<span>' + pillFor(bk) + '</span>' +
+               '<span style="text-align:right;">' + btn + '</span>' +
+             '</div>';
+    }
+
+    function render() {
+      summary(); counts();
+      var students = S.data.students;
+      var q = state.q.trim().toLowerCase();
+      var rows = students.filter(function (s) {
+        if (q && s.name.toLowerCase().indexOf(q) === -1) return false;
+        if (state.filter === 'all') return true;
+        return bucket(statusOf(s)) === state.filter;
+      });
+      var box = $('trows');
+      box.innerHTML = rows.length ? rows.map(rowHTML).join('') : '<div class="empty">No students match this filter.</div>';
+      box.querySelectorAll('.trow').forEach(function (row) {
+        if (row.dataset.bucket === 'absent') return;
+        row.addEventListener('click', function () {
+          var name = row.getAttribute('data-student');
+          S.goToStudent(name);
+          window.location.href = 'screen-4-mcq.html';
+        });
+      });
+    }
+
+    // filter tabs
+    $('filters').querySelectorAll('.filter-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        $('filters').querySelectorAll('.filter-tab').forEach(function (t){ t.classList.remove('active'); });
+        tab.classList.add('active');
+        state.filter = tab.dataset.filter;
+        render();
+      });
+    });
+    // search
+    $('name-search').addEventListener('input', function () { state.q = this.value; render(); });
+
+    render();
+    S.subscribe(render);
+  });
+})();
+</script>
+<script src="pm-notes.js"></script>
+</body>
+</html>

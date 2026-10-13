@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LOAM AI Grading</title>
+<meta name="description" content="Product case study and clickable prototype: AI-assisted step-wise grading for CBSE Class XII Maths teachers." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --brand-blue: #1E7CE8;
+    --brand-blue-soft: #E8F2FF;
+    --brand-orange: #F37920;
+    --gray-50: #FAFAF9;
+    --gray-100: #F4F4F2;
+    --gray-200: #E7E5E0;
+    --gray-500: #6B6964;
+    --gray-600: #4A4844;
+    --gray-700: #2C2A26;
+    --gray-900: #0F0E0C;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+    --shadow-rest: 0 1px 2px rgba(15,14,12,0.04), 0 0 0 1px rgba(15,14,12,0.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: var(--font-sans); background: var(--gray-50); color: var(--gray-900);
+    -webkit-font-smoothing: antialiased; line-height: 1.55;
+  }
+  a { color: var(--brand-blue); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+  header.top { background: #fff; border-bottom: 1px solid var(--gray-200); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 12px; }
+  .wordmark { font-weight: 700; letter-spacing: -0.01em; }
+  .wordmark span { color: var(--brand-blue); }
+  header.top a { font-size: 14px; font-weight: 500; text-decoration: none; }
+
+  .hero { padding: 56px 0 8px; }
+  .eyebrow { font: 600 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-orange); }
+  h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.1; letter-spacing: -0.025em; margin: 12px 0 16px; max-width: 20ch; }
+  .lede { font-size: 18px; color: var(--gray-600); max-width: 62ch; margin: 0 0 26px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font: 600 15px var(--font-sans); text-decoration: none; padding: 11px 18px;
+    border-radius: 6px; border: 1px solid transparent; cursor: pointer;
+  }
+  .btn.primary { background: var(--brand-blue); color: #fff; }
+  .btn.primary:hover { background: #1669c7; }
+  .btn.ghost { background: #fff; color: var(--gray-700); border-color: var(--gray-200); }
+  .btn.ghost:hover { border-color: #cfccc5; }
+  .note { margin: 14px 0 0; font-size: 13px; color: var(--gray-500); }
+
+  .shot { margin-top: 36px; border-radius: 10px; overflow: hidden; background: #fff;
+    box-shadow: 0 20px 50px rgba(15,14,12,0.12), 0 0 0 1px rgba(15,14,12,0.06); }
+  .shot img { display: block; width: 100%; height: auto; }
+
+  section.block { padding: 48px 0 8px; }
+  h2 { font-size: 24px; letter-spacing: -0.015em; margin: 0 0 6px; }
+  .sub { color: var(--gray-600); margin: 0 0 22px; max-width: 64ch; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .stat { background: #fff; border-radius: 10px; padding: 18px; box-shadow: var(--shadow-rest); }
+  .stat .n { font: 600 34px/1.1 var(--font-mono); letter-spacing: -0.02em; }
+  .stat .n small { font-size: 16px; color: var(--gray-500); font-weight: 500; }
+  .stat .what { font-weight: 600; margin: 8px 0 4px; }
+  .stat .so { font-size: 14px; color: var(--gray-600); margin: 0; }
+  .stat .so b { color: var(--gray-900); }
+  .src { font-size: 13px; color: var(--gray-500); margin-top: 12px; }
+
+  .decisions { display: grid; gap: 12px; }
+  .dec { background: #fff; border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow-rest);
+    display: grid; grid-template-columns: 40px 1fr; gap: 4px 14px; }
+  .dec .k { font: 600 13px var(--font-mono); color: var(--brand-blue); background: var(--brand-blue-soft);
+    border-radius: 6px; height: 32px; display: grid; place-items: center; }
+  .dec h3 { margin: 4px 0 4px; font-size: 17px; }
+  .dec p { margin: 0; color: var(--gray-600); font-size: 15px; }
+  .dec p + p { margin-top: 6px; }
+  .dec .lbl { font: 600 10.5px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-500); margin-right: 6px; }
+
+  .screens { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+  .card { display: block; text-decoration: none; color: inherit; background: #fff; border-radius: 10px;
+    overflow: hidden; box-shadow: var(--shadow-rest); transition: box-shadow .15s, transform .15s; }
+  .card:hover { box-shadow: 0 4px 12px rgba(15,14,12,0.08), 0 0 0 1px rgba(30,124,232,0.25); transform: translateY(-1px); }
+  .card img { display: block; width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top;
+    border-bottom: 1px solid var(--gray-200); background: var(--gray-100); }
+  .card .meta { padding: 12px 16px 16px; }
+  .card .num { font: 600 11px var(--font-mono); color: var(--brand-blue); background: var(--brand-blue-soft); padding: 2px 7px; border-radius: 4px; }
+  .card h3 { font-size: 16px; margin: 8px 0 2px; }
+  .card p { margin: 0; font-size: 14px; color: var(--gray-600); }
+
+  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: center; }
+  .split ul { margin: 0; padding-left: 18px; color: var(--gray-600); }
+  .split li { margin: 6px 0; }
+  .split li b { color: var(--gray-900); }
+
+  footer { margin-top: 56px; border-top: 1px solid var(--gray-200); padding: 24px 0 40px; font-size: 13px; color: var(--gray-500); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; }
+
+  @media (max-width: 760px) {
+    .split { grid-template-columns: 1fr; }
+    .hero { padding-top: 36px; }
+    .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="wordmark">LOAM <span>·</span> AI Grading</div>
+    <a id="repoLink" href="#">Full case study →</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Product case study · Clickable prototype</div>
+      <h1>The AI marks the papers. The teacher only checks what matters.</h1>
+      <p class="lede">
+        LOAM grades CBSE Class XII Maths papers step by step, the way the board does. The teacher approves
+        the routine work in bulk and spends her time where her judgement counts. This prototype was used to
+        pitch LOAM to Narayana Educational Institutions, and it won the contract.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="screen-class.html">Take the guided tour (3 min) →</a>
+        <a class="btn ghost" href="#data">What the data says</a>
+        <a class="btn ghost" href="design-system.html">Design system</a>
+      </div>
+      <p class="note">Every screen has a <b>PM notes</b> panel explaining the decision behind it. Best on a laptop. Student names are invented.</p>
+      <div class="shot"><img src="assets/screenshots/screen-5-grading.png" alt="Grading workspace: scanned answer, AI step-wise marks, teacher notes" /></div>
+    </section>
+
+    <section class="block" id="data">
+      <h2>Start from the data, not the screens</h2>
+      <p class="sub">Before designing the review flow, I looked at how one real Class XII Maths pre-board actually gets marked: 30 students, 38 questions, 1,140 answers.</p>
+      <div class="stats">
+        <div class="stat">
+          <div class="n">53%<small> vs 25%</small></div>
+          <div class="what">MCQs: share of answers vs share of marks</div>
+          <p class="so">Over half of what a teacher checks is worth only a quarter of the marks. <b>So:</b> approve MCQs in one click.</p>
+        </div>
+        <div class="stat">
+          <div class="n">41%</div>
+          <div class="what">of written answers got part marks</div>
+          <p class="so">About half in the 3-, 4- and 5-mark sections. Right/wrong grading can't work here. <b>So:</b> the AI marks step by step, and every step can be edited.</p>
+        </div>
+        <div class="stat">
+          <div class="n">4<small> of 30</small></div>
+          <div class="what">students below the 33% pass mark</div>
+          <p class="so">"Application of Derivatives" lost the class the most marks. <b>So:</b> grading data feeds the next product, class analytics.</p>
+        </div>
+      </div>
+      <p class="src">Source: SQL over the demo's marks data. <a id="sqlLink" href="analysis/queries.sql">See the queries</a> · <a id="resLink" href="analysis/results.md">results</a>.</p>
+    </section>
+
+    <section class="block">
+      <h2>Three decisions that shaped it</h2>
+      <p class="sub">The person using the screen (a Maths teacher) is not the person deciding to buy (school leadership). Each decision had to work for both.</p>
+      <div class="decisions">
+        <div class="dec"><div class="k">01</div><div>
+          <h3>Load the school's rules before grading anything</h3>
+          <p>LOAM reads the CBSE marking scheme, the teacher's answer key and the school's own grading guidelines first. In the pitch, Narayana's guidelines were dropped in live.</p>
+          <p><span class="lbl">Why</span>The buyer's first question is "will it mark the way we mark?" This answers it before a single paper is graded.</p>
+        </div></div>
+        <div class="dec"><div class="k">02</div><div>
+          <h3>Check only what the AI isn't sure about</h3>
+          <p>MCQs are approved as a block. The teacher's attention goes to the written answers.</p>
+          <p><span class="lbl">Why</span>That's where the time goes and where the marks are: 53% of decisions, 25% of the marks.</p>
+        </div></div>
+        <div class="dec"><div class="k">03</div><div>
+          <h3>Every mark has a reason, and every mark can be changed</h3>
+          <p>Written answers show AI marks per step, with the reason for each deduction. The teacher can edit any step, tag the error type and add a note.</p>
+          <p><span class="lbl">Why</span>Teachers won't accept marks they can't see the logic behind. And the error tags become the data for class analytics.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="split">
+        <div>
+          <h2>Built to be understood without me in the room</h2>
+          <p class="sub">A recruiter or engineer can click through on their own. The PM notes panel on each screen covers:</p>
+          <ul>
+            <li><b>Job of the screen:</b> what it has to achieve</li>
+            <li><b>Decision:</b> what I chose to do</li>
+            <li><b>Evidence:</b> the data or reasoning behind it</li>
+            <li><b>Metric:</b> how I'd know it's working</li>
+          </ul>
+        </div>
+        <div class="shot" style="margin-top:0"><img src="assets/screenshots/pm-notes-example.png" alt="MCQ screen with the PM notes panel open" /></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <h2>The flow</h2>
+      <p class="sub">Eight screens, from loading the rubric to a finished class. Click any screen to jump in.</p>
+      <div class="screens" id="screens"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>LOAM by Inferentics · Prototype built with Claude Design (AI-assisted)</span>
+    <span><a href="#" id="resetBtn">Reset demo</a></span>
+  </div>
+</footer>
+
+<script>
+  var SCREENS = [
+    ['Start', 'screen-class',            'Class home',          'The teacher opens a paper that LOAM has already graded.'],
+    ['1',     'screen-2-setup',          'Load the rules',      'Marking scheme, answer key and school guidelines.'],
+    ['2',     'screen-3-grading',        'AI grades 30 papers', 'Visible progress, so the saving feels real.'],
+    ['3',     'screen-dashboard',        'Class review',        'Where the class stands, and who to check next.'],
+    ['4',     'screen-4-mcq',            'MCQs in one click',   '20 answers checked against the key, approved together.'],
+    ['5',     'screen-5-grading',        'Written answers',     'Step-wise marks with reasons, all editable.'],
+    ['6',     'screen-6-final-review',   'Final review',        'All 38 questions on one page before submitting.'],
+    ['7',     'screen-7-class-complete', 'Class complete',      'Time saved and class summary.']
+  ];
+  var grid = document.getElementById('screens');
+  SCREENS.forEach(function (s) {
+    var a = document.createElement('a');
+    a.className = 'card'; a.href = s[1] + '.html';
+    a.innerHTML = '<img loading="lazy" src="assets/screenshots/' + s[1] + '.png" alt="' + s[2] + ' screen" />' +
+      '<div class="meta"><span class="num">' + s[0] + '</span><h3>' + s[2] + '</h3><p>' + s[3] + '</p></div>';
+    grid.appendChild(a);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    try { localStorage.removeItem('loam_demo_v1'); localStorage.removeItem('loam_pm_notes_open'); } catch (err) {}
+    this.textContent = 'Demo reset ✓';
+  });
+
+  // On GitHub Pages, link to the repo README and to GitHub's rendered view of the analysis files.
+  (function () {
+    var m = location.hostname.match(/^([^.]+)\.github\.io$/);
+    var repo = location.pathname.split('/').filter(Boolean)[0];
+    var link = document.getElementById('repoLink');
+    if (m && repo) {
+      var base = 'https://github.com/' + m[1] + '/' + repo;
+      link.href = base + '#readme';
+      document.getElementById('sqlLink').href = base + '/blob/main/analysis/queries.sql';
+      document.getElementById('resLink').href = base + '/blob/main/analysis/results.md';
+    } else {
+      link.style.display = 'none';
+    }
+  })();
+</script>
+</body>
+</html>

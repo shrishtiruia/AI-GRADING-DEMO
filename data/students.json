@@ -1,0 +1,1052 @@
+[
+  {
+    "name": "Aditi Menon",
+    "roll_number": "01",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "AM",
+    "total_marks": 78.5,
+    "max_marks": 80,
+    "rank_in_class": 2,
+    "class_size": 30,
+    "peer_label": "Top 10% of class",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 20.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 10.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 16.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 20.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 12.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Advait Kulkarni",
+    "roll_number": "02",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "AK",
+    "total_marks": 56.5,
+    "max_marks": 80,
+    "rank_in_class": 9,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 18.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 15.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 6.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 8.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Ananya Iyer",
+    "roll_number": "03",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "AI",
+    "total_marks": 12.0,
+    "max_marks": 80,
+    "rank_in_class": 29,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 2.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 2.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 3.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 5.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 0.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Arjun Nair",
+    "roll_number": "04",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "AN",
+    "total_marks": 58.5,
+    "max_marks": 80,
+    "rank_in_class": 7,
+    "class_size": 30,
+    "peer_label": "Top quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 16.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 13.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 11.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 10.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Bhavya Chopra",
+    "roll_number": "05",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "BC",
+    "total_marks": 14.0,
+    "max_marks": 80,
+    "rank_in_class": 28,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 5.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 2.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 2.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 1.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Charvi Pillai",
+    "roll_number": "06",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "CP",
+    "total_marks": 70.5,
+    "max_marks": 80,
+    "rank_in_class": 3,
+    "class_size": 30,
+    "peer_label": "Top 10% of class",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 16.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 10.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 15.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 17.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 12.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Daksh Malhotra",
+    "roll_number": "07",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "DM",
+    "total_marks": 39.0,
+    "max_marks": 80,
+    "rank_in_class": 21,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 12.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 12.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 4.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 3.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Diya Reddy",
+    "roll_number": "08",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "DR",
+    "total_marks": 44.0,
+    "max_marks": 80,
+    "rank_in_class": 19,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 11.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 5.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 13.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 9.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 6.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Gaurav Bhatt",
+    "roll_number": "09",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "GB",
+    "total_marks": 23.5,
+    "max_marks": 80,
+    "rank_in_class": 27,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 7.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 3.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 9.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 3.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 1.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Ishaan Kapoor",
+    "roll_number": "10",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "IK",
+    "total_marks": 32.5,
+    "max_marks": 80,
+    "rank_in_class": 23,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 8.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 6.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 5.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Ira Deshpande",
+    "roll_number": "11",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "ID",
+    "total_marks": 29.5,
+    "max_marks": 80,
+    "rank_in_class": 26,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 9.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 3.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 7.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 6.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Kabir Mehta",
+    "roll_number": "12",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "KM",
+    "total_marks": 56.0,
+    "max_marks": 80,
+    "rank_in_class": 10,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 14.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 6.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 16.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 13.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 6.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Kavya Rangan",
+    "roll_number": "13",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "KR",
+    "total_marks": 44.5,
+    "max_marks": 80,
+    "rank_in_class": 18,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 8.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 10.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 12.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 5.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Laksh Varma",
+    "roll_number": "14",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "LV",
+    "total_marks": 70.0,
+    "max_marks": 80,
+    "rank_in_class": 4,
+    "class_size": 30,
+    "peer_label": "Top quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 20.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 10.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 15.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 14.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 10.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Meera",
+    "roll_number": "15",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "ME",
+    "total_marks": 79.0,
+    "max_marks": 80,
+    "rank_in_class": 1,
+    "class_size": 30,
+    "peer_label": "Top 10% of class",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 20.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 10.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 17.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 20.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 12.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Mihir Ghosh",
+    "roll_number": "16",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "MG",
+    "total_marks": 12.0,
+    "max_marks": 80,
+    "rank_in_class": 29,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 6.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 2.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 3.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 0.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 0.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Naina Bhatia",
+    "roll_number": "17",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "NB",
+    "total_marks": 57.5,
+    "max_marks": 80,
+    "rank_in_class": 8,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 12.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 12.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 17.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 7.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Neel Chatterjee",
+    "roll_number": "18",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "NC",
+    "total_marks": 54.0,
+    "max_marks": 80,
+    "rank_in_class": 13,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 16.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 7.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 13.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 13.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Nikhil Pandey",
+    "roll_number": "19",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "NP",
+    "total_marks": 55.0,
+    "max_marks": 80,
+    "rank_in_class": 11,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 16.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 9.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 14.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 11.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Pari Sethi",
+    "roll_number": "20",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "PS",
+    "total_marks": 49.0,
+    "max_marks": 80,
+    "rank_in_class": 14,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 10.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 12.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 13.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 5.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Riya Kamath",
+    "roll_number": "21",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "RK",
+    "total_marks": 45.5,
+    "max_marks": 80,
+    "rank_in_class": 17,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 9.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 7.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 14.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 12.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 3.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Rohan Banerjee",
+    "roll_number": "22",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "RB",
+    "total_marks": 48.0,
+    "max_marks": 80,
+    "rank_in_class": 15,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 14.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 9.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 12.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 8.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Saanvi Hegde",
+    "roll_number": "23",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "SH",
+    "total_marks": 30.5,
+    "max_marks": 80,
+    "rank_in_class": 25,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 11.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 3.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 12.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 4.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 0.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Samar Rastogi",
+    "roll_number": "24",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "SR",
+    "total_marks": 46.0,
+    "max_marks": 80,
+    "rank_in_class": 16,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 10.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 6.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 11.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 11.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 8.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Tanvi Krishnan",
+    "roll_number": "25",
+    "section_display": "XII-A",
+    "section_origin": "XII - K",
+    "initials": "TK",
+    "total_marks": 54.5,
+    "max_marks": 80,
+    "rank_in_class": 12,
+    "class_size": 30,
+    "peer_label": "Above class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 11.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 15.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 13.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 6.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Tanish Arora",
+    "roll_number": "26",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "TA",
+    "total_marks": 67.0,
+    "max_marks": 80,
+    "rank_in_class": 6,
+    "class_size": 30,
+    "peer_label": "Top quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 18.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 10.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 16.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 14.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 9.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Uma Venkatesh",
+    "roll_number": "27",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "UV",
+    "total_marks": 32.5,
+    "max_marks": 80,
+    "rank_in_class": 23,
+    "class_size": 30,
+    "peer_label": "Bottom quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 8.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 9.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 8.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 6.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 1.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Vedant Saxena",
+    "roll_number": "28",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "VS",
+    "total_marks": 35.5,
+    "max_marks": 80,
+    "rank_in_class": 22,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 3.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 7.5,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 8.5,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 12.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.5,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Vihaan Mathur",
+    "roll_number": "29",
+    "section_display": "XII-A",
+    "section_origin": "XII - H",
+    "initials": "VM",
+    "total_marks": 67.5,
+    "max_marks": 80,
+    "rank_in_class": 5,
+    "class_size": 30,
+    "peer_label": "Top quartile",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 20.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 6.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 14.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 17.5,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 10.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  },
+  {
+    "name": "Zoya Qureshi",
+    "roll_number": "30",
+    "section_display": "XII-A",
+    "section_origin": "XII - Q",
+    "initials": "ZQ",
+    "total_marks": 41.0,
+    "max_marks": 80,
+    "rank_in_class": 20,
+    "class_size": 30,
+    "peer_label": "Below class median",
+    "section_breakdown": {
+      "section_a_mcq": {
+        "score": 6.0,
+        "max": 20
+      },
+      "section_b_vsa": {
+        "score": 8.0,
+        "max": 10
+      },
+      "section_c_sa": {
+        "score": 14.0,
+        "max": 18
+      },
+      "section_d_la": {
+        "score": 9.0,
+        "max": 20
+      },
+      "section_e_case": {
+        "score": 4.0,
+        "max": 12
+      }
+    },
+    "attended": true
+  }
+]

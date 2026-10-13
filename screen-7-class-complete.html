@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1440, initial-scale=1.0" />
+<title>LOAM · Screen 7 — Class complete</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --brand-blue: #1E7CE8;
+    --brand-blue-soft: #E8F2FF;
+    --brand-orange: #F37920;
+    --brand-orange-soft: #FFF1E5;
+
+    --gray-50:  #FAFAF9;
+    --gray-100: #F4F4F2;
+    --gray-200: #E7E5E0;
+    --gray-300: #D4D2CC;
+    --gray-400: #A8A6A0;
+    --gray-500: #6B6964;
+    --gray-600: #4A4844;
+    --gray-700: #2C2A26;
+    --gray-900: #0F0E0C;
+
+    --success: #16A34A;
+
+    --radius-card: 10px;
+    --radius-btn: 6px;
+
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--gray-700);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+    background:
+      linear-gradient(180deg, #F3F8FF 0%, #FBFCFE 46%, #FFFFFF 100%);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Soft floating decorative shapes — very restrained */
+  .bg-decor { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(2px);
+    opacity: 0.5;
+  }
+  .blob.b1 { width: 340px; height: 340px; left: -90px; top: 12%;
+    background: radial-gradient(circle at 30% 30%, rgba(30,124,232,0.10), rgba(30,124,232,0) 70%); }
+  .blob.b2 { width: 420px; height: 420px; right: -120px; top: 8%;
+    background: radial-gradient(circle at 30% 30%, rgba(243,121,32,0.07), rgba(243,121,32,0) 70%); }
+  .blob.b3 { width: 280px; height: 280px; right: 12%; bottom: -80px;
+    background: radial-gradient(circle at 30% 30%, rgba(30,124,232,0.08), rgba(30,124,232,0) 70%); }
+  .dot {
+    position: absolute; border-radius: 50%;
+    background: var(--brand-blue); opacity: 0.10;
+  }
+  .dot.d1 { width: 10px; height: 10px; left: 18%; top: 30%; }
+  .dot.d2 { width: 7px;  height: 7px;  left: 78%; top: 36%; background: var(--brand-orange); opacity: 0.14; }
+  .dot.d3 { width: 6px;  height: 6px;  left: 30%; top: 68%; }
+  .dot.d4 { width: 9px;  height: 9px;  left: 66%; top: 72%; }
+
+  /* Minimal top bar */
+  .topbar {
+    position: relative; z-index: 2;
+    height: 56px;
+    display: flex; align-items: center;
+    padding: 0 28px;
+    gap: 14px;
+  }
+  .wordmark {
+    font-weight: 600;
+    color: var(--brand-orange);
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .topbar .context {
+    color: var(--gray-600);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .topbar .context .sep { color: var(--gray-300); margin: 0 7px; }
+  .avatar {
+    margin-left: auto;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--brand-blue-soft); color: var(--brand-blue);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 12px;
+  }
+
+  /* Stage */
+  html, body { overflow: hidden; }
+  .stage {
+    position: relative; z-index: 1;
+    height: calc(100vh - 56px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 20px 24px 24px;
+    overflow: hidden;
+  }
+
+  .hero {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    display: flex; flex-direction: column;
+    align-items: center;
+  }
+
+  /* Celebratory illustration */
+  .illo {
+    width: 96px; height: 96px;
+    margin-bottom: 14px;
+    position: relative;
+    animation: pop .55s cubic-bezier(.22,1,.36,1) both;
+  }
+  @keyframes pop {
+    0% { transform: scale(.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .headline {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  /* Hero metric — unified 'time saved' card */
+  .metric-card {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 480px;
+    background: linear-gradient(180deg, var(--brand-blue-soft) 0%, rgba(232,242,255,0.45) 100%);
+    border: 1px solid rgba(30,124,232,0.18);
+    border-radius: 16px;
+    padding: 22px 28px 24px;
+    display: flex; flex-direction: column;
+    align-items: center;
+    box-shadow: 0 8px 28px rgba(30,124,232,0.10);
+  }
+  .metric-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700;
+    color: #1456a8;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .metric-label svg { opacity: 0.85; }
+  .metric {
+    margin-top: 10px;
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: nowrap;
+    font-family: var(--font-mono);
+    font-size: 52px; font-weight: 700;
+    color: var(--success);
+    letter-spacing: -0.03em; line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .metric > span { white-space: nowrap; flex-shrink: 0; }
+  .metric .saved-tag {
+    font-family: var(--font-sans);
+    font-size: 18px; font-weight: 600;
+    color: #15803d; letter-spacing: 0;
+  }
+  .savings-badge {
+    margin-top: 12px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--success); color: #fff;
+    font-size: 12.5px; font-weight: 700; letter-spacing: 0.01em;
+    padding: 4px 12px; border-radius: 999px;
+    opacity: 0; transform: translateY(4px);
+    transition: opacity .4s ease, transform .4s ease;
+  }
+  .savings-badge.in { opacity: 1; transform: translateY(0); }
+  .savings-badge svg { width: 13px; height: 13px; }
+
+  .compare { margin-top: 20px; width: 100%; padding-top: 18px; border-top: 1px solid rgba(30,124,232,0.15); }
+  .compare-bar {
+    position: relative; width: 100%; height: 38px;
+    border-radius: 9px; overflow: hidden; display: flex;
+    background: var(--gray-100); border: 1px solid rgba(15,14,12,0.05);
+  }
+  .seg {
+    height: 100%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 12px; font-weight: 600; white-space: nowrap;
+    width: 0; transition: width .9s cubic-bezier(.22,1,.36,1); overflow: hidden;
+  }
+  .seg-loam { background: var(--brand-blue); color: #fff; }
+  .seg-saved { background: var(--success-soft); color: #15803d; }
+  .seg-saved .seg-txt { padding: 0 8px; }
+  .compare-legend {
+    margin-top: 12px; display: flex; align-items: center; justify-content: center;
+    gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--gray-600);
+  }
+  .compare-legend .lg { display: inline-flex; align-items: center; gap: 6px; }
+  .compare-legend .sw { width: 10px; height: 10px; border-radius: 3px; }
+  .compare-legend .sw.loam { background: var(--brand-blue); }
+  .compare-legend .sw.saved { background: var(--success); }
+  .compare-legend .mono { font-family: var(--font-mono); font-weight: 600; color: var(--gray-700); }
+  .compare-legend .baseline { color: var(--gray-500); }
+
+  /* Stats row */
+  .stats {
+    margin-top: 26px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    width: 100%;
+    max-width: 420px;
+  }
+  .stat {
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-card);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(15,14,12,0.03);
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .stat.in { animation: rise .4s ease-out forwards; }
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .stat .num {
+    font-family: var(--font-mono);
+    font-size: 28px; font-weight: 600;
+    color: var(--gray-900);
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .stat .num .denom { color: var(--gray-400); font-size: 18px; font-weight: 500; }
+  .stat .cap {
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: var(--gray-600);
+  }
+
+  /* CTA */
+  .cta {
+    margin-top: 26px;
+    display: flex; flex-direction: row; flex-wrap: wrap;
+    align-items: center; justify-content: center;
+    gap: 14px 20px;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  .cta.in { animation: rise .4s ease-out .1s forwards; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    border-radius: var(--radius-btn);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, color .15s, transform .12s, box-shadow .15s;
+    text-decoration: none;
+  }
+  .btn-terminal {
+    background: var(--brand-orange); color: #fff;
+    height: 48px; padding: 0 26px;
+    font-size: 15px;
+    box-shadow: 0 4px 14px rgba(243,121,32,0.28);
+  }
+  .btn-terminal:hover { background: #db691a; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(243,121,32,0.34); }
+  .ghost-wrap { text-align: center; }
+  .btn-ghost {
+    background: transparent; color: var(--gray-700);
+    height: 36px; padding: 0 14px;
+    font-size: 14px;
+  }
+  .btn-ghost:hover { color: var(--brand-blue); }
+  .ghost-sub {
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-decor" aria-hidden="true">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="dot d1"></div>
+  <div class="dot d2"></div>
+  <div class="dot d3"></div>
+  <div class="dot d4"></div>
+</div>
+
+<header class="topbar">
+  <span class="wordmark">Narayana</span>
+  <span class="context">Class XII-A <span class="sep">·</span> Maths Pre-Board 1 <span class="sep">·</span> Final results</span>
+  <div class="avatar" title="Anita Rao">AR</div>
+</header>
+
+<main class="stage">
+
+  <div class="hero">
+    <!-- Celebratory illustration: paper stack with a tick -->
+    <div class="illo" aria-hidden="true">
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+        <rect x="30" y="24" width="56" height="72" rx="8" fill="#fff" stroke="#E7E5E0" stroke-width="2" transform="rotate(-7 58 60)"/>
+        <rect x="34" y="22" width="56" height="72" rx="8" fill="#fff" stroke="#D4D2CC" stroke-width="2"/>
+        <line x1="44" y1="40" x2="80" y2="40" stroke="#E7E5E0" stroke-width="3" stroke-linecap="round"/>
+        <line x1="44" y1="52" x2="80" y2="52" stroke="#E7E5E0" stroke-width="3" stroke-linecap="round"/>
+        <line x1="44" y1="64" x2="68" y2="64" stroke="#E7E5E0" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="82" cy="84" r="22" fill="#16A34A"/>
+        <path d="M72 84.5l7 7 13-14" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <h1 class="headline">All 30 papers graded.</h1>
+
+    <div class="metric-card">
+      <div class="metric-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+        Time saved on grading
+      </div>
+      <div class="metric"><span id="metric" aria-live="polite">0h 00m</span><span class="saved-tag">saved</span></div>
+      <div class="savings-badge" id="savings-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17h6v-6"></path><path d="m22 17-8.5-8.5-5 5L2 7"></path></svg>
+        86% less grading time · 7× faster
+      </div>
+    </div>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat">
+      <div class="num"><span id="stat-avg">46.8</span><span class="denom"> / 80</span></div>
+      <div class="cap">Class average</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="stat-absent">0</div>
+      <div class="cap" id="stat-absent-cap">Absent · 0 pending</div>
+    </div>
+  </div>
+
+  <div class="cta" id="cta">
+    <button class="btn btn-terminal">
+      Communicate results to students
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+    </button>
+    <div class="ghost-wrap">
+      <button class="btn btn-ghost">
+        View class analysis
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </button>
+      <div class="ghost-sub">See error patterns across the class</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+/* ---- Count-up hero metric: 0 → 9h 12m over 1.2s, ease-out ---- */
+const TARGET_MIN = 9 * 60 + 12; // 552 minutes
+const DURATION = 1200;
+const metricEl = document.getElementById('metric');
+
+function fmt(totalMin) {
+  const h = Math.floor(totalMin / 60);
+  const m = Math.round(totalMin % 60);
+  return `${h}h ${String(m).padStart(2, '0')}m`;
+}
+function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+let start = null;
+function tick(ts) {
+  if (start === null) start = ts;
+  const t = Math.min((ts - start) / DURATION, 1);
+  const val = easeOutCubic(t) * TARGET_MIN;
+  metricEl.textContent = fmt(val);
+  if (t < 1) {
+    requestAnimationFrame(tick);
+  } else {
+    metricEl.textContent = fmt(TARGET_MIN);
+    // After count-up, stagger in the stats then the CTA
+    const stats = document.querySelectorAll('#stats .stat');
+    stats.forEach((s, i) => setTimeout(() => s.classList.add('in'), i * 80));
+    setTimeout(() => document.getElementById('cta').classList.add('in'), stats.length * 80 + 40);
+  }
+}
+window.addEventListener('load', () => {
+  requestAnimationFrame(tick);
+  // reveal the savings badge + animate the Manual-vs-LOAM bar (independent of count-up)
+  setTimeout(() => {
+    const sl = document.getElementById('seg-loam'); if (sl) sl.style.width = '13.75%';
+    const ss = document.getElementById('seg-saved'); if (ss) ss.style.width = '86.25%';
+    const b = document.getElementById('savings-badge'); if (b) b.classList.add('in');
+  }, 500);
+});
+</script>
+
+<!-- ============ LOAM state wiring ============ -->
+<script src="loam-store.js"></script>
+<script src="loam-chrome.js"></script>
+<script>
+/* Class stats come from the data, not hard-coded numbers */
+window.LOAM && LOAM.ready.then(function (d) {
+  var s = d.students || [];
+  var present = s.filter(function (x) { return x.attended; });
+  var avg = present.reduce(function (a, x) { return a + x.total_marks; }, 0) / (present.length || 1);
+  document.getElementById('stat-avg').textContent = avg.toFixed(1);
+  document.getElementById('stat-absent').textContent = s.length - present.length;
+});
+</script>
+<script src="pm-notes.js"></script>
+</body>
+</html>

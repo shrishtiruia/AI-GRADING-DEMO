@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LOAM · Design System Foundation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ------- Tokens ------- */
+  :root {
+    --brand-blue: #1E7CE8;
+    --brand-blue-soft: #E8F2FF;
+    --brand-orange: #F37920;
+    --brand-orange-soft: #FFF1E5;
+    --subject-maths: #F4A04A;
+
+    --gray-50:  #FAFAF9;
+    --gray-100: #F4F4F2;
+    --gray-200: #E7E5E0;
+    --gray-300: #D4D2CC;
+    --gray-400: #A8A6A0;
+    --gray-500: #6B6964;
+    --gray-600: #4A4844;
+    --gray-700: #2C2A26;
+    --gray-900: #0F0E0C;
+
+    --success: #16A34A;
+    --success-soft: #DCFCE7;
+    --warning: #F37920;
+    --warning-soft: #FFF1E5;
+    --danger: #DC2626;
+    --danger-soft: #FEE2E2;
+
+    --radius-card: 10px;
+    --radius-btn: 6px;
+    --radius-input: 6px;
+
+    --shadow-card: 0 1px 2px rgba(15,14,12,0.04), 0 0 0 1px rgba(15,14,12,0.06);
+    --shadow-hover: 0 4px 12px rgba(15,14,12,0.08), 0 0 0 1px rgba(30,124,232,0.2);
+    --shadow-modal: 0 20px 50px rgba(15,14,12,0.12);
+
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--gray-700);
+    background: var(--gray-50);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button { font-family: inherit; cursor: pointer; }
+  input { font-family: inherit; }
+
+  /* ------- App shell ------- */
+  .app { display: flex; min-height: 100vh; }
+
+  /* Top bar */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 52px;
+    background: #fff;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center;
+    padding: 0 20px;
+    z-index: 10;
+  }
+  .wordmark {
+    font-weight: 700; letter-spacing: -0.01em;
+    color: var(--brand-orange);
+    font-size: 15px;
+  }
+  .wordmark-dot { color: var(--gray-300); margin: 0 10px; font-weight: 400; }
+  .breadcrumb {
+    color: var(--gray-500); font-size: 13px; font-weight: 500;
+  }
+  .breadcrumb .sep { color: var(--gray-300); margin: 0 8px; }
+  .breadcrumb .current { color: var(--gray-700); }
+  .topbar-right {
+    margin-left: auto; display: flex; align-items: center; gap: 14px;
+  }
+  .search {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--gray-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-input);
+    padding: 6px 10px;
+    width: 260px;
+    font-size: 13px;
+    color: var(--gray-500);
+    transition: border-color .15s, background .15s;
+  }
+  .search:hover { border-color: var(--gray-200); background: #fff; }
+  .search .kbd {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 1px 6px;
+    background: #fff;
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    color: var(--gray-500);
+  }
+  .icon-btn {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-btn);
+    background: transparent; border: none;
+    color: var(--gray-500);
+    transition: background .15s, color .15s;
+  }
+  .icon-btn:hover { background: var(--gray-100); color: var(--gray-700); }
+  .avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--brand-blue-soft); color: var(--brand-blue);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 12px;
+  }
+
+  /* ------- Left panel (persistent student list) ------- */
+  .leftpanel {
+    width: 280px;
+    flex-shrink: 0;
+    background: #fff;
+    border-right: 1px solid var(--gray-200);
+    margin-top: 52px;
+    display: flex; flex-direction: column;
+    position: sticky; top: 52px;
+    height: calc(100vh - 52px);
+  }
+  .lp-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .lp-header .title {
+    font-size: 13px; font-weight: 600; color: var(--gray-700);
+    letter-spacing: -0.005em;
+  }
+  .lp-header .progress-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 8px;
+  }
+  .lp-header .progress-text {
+    font-size: 11px; font-weight: 600; color: var(--gray-500);
+    letter-spacing: 0.04em; text-transform: uppercase;
+  }
+  .lp-header .progress-count {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500; color: var(--gray-600);
+  }
+  .lp-progressbar {
+    margin-top: 8px;
+    height: 3px; background: var(--gray-100); border-radius: 999px; overflow: hidden;
+  }
+  .lp-progressbar .fill { height: 100%; background: var(--brand-blue); width: 40%; }
+  .lp-search {
+    margin-top: 10px;
+    width: 100%;
+    background: var(--gray-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-input);
+    padding: 6px 10px;
+    font-size: 13px;
+    color: var(--gray-700);
+    outline: none;
+    transition: background .15s, border-color .15s;
+  }
+  .lp-search::placeholder { color: var(--gray-500); }
+  .lp-search:focus { background: #fff; border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--brand-blue-soft); }
+
+  .lp-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+  }
+  .student-row {
+    display: grid;
+    grid-template-columns: 14px 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 9px 16px 9px 13px;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: background .12s;
+    position: relative;
+  }
+  .student-row:hover { background: var(--gray-50); }
+  .student-row.active {
+    background: var(--brand-blue-soft);
+    border-left-color: var(--brand-blue);
+  }
+  .student-row.active .student-name { color: var(--gray-900); }
+
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--gray-300);
+    flex-shrink: 0;
+  }
+  .dot.in-progress { background: var(--brand-blue); }
+  .dot.reviewed { background: var(--success); }
+  .dot.flagged { background: var(--brand-orange); box-shadow: 0 0 0 3px var(--brand-orange-soft); }
+  .dot.absent { background: var(--gray-200); border: 1px dashed var(--gray-400); }
+
+  .student-meta { min-width: 0; }
+  .student-name {
+    font-size: 13px; font-weight: 500; color: var(--gray-700);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .student-roll {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--gray-600);
+    margin-top: 1px;
+  }
+  .student-score {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    color: var(--gray-600);
+  }
+  .student-score.absent { color: var(--gray-500); }
+  .student-score.flagged { color: var(--brand-orange); }
+  .student-score .denom { color: var(--gray-500); }
+
+  .lp-footer {
+    padding: 12px 16px;
+    border-top: 1px solid var(--gray-200);
+    background: #fff;
+  }
+
+  /* ------- Buttons ------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius-btn);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border: 1px solid transparent;
+    transition: background .15s, border-color .15s, color .15s, box-shadow .15s;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--brand-blue); color: #fff;
+  }
+  .btn-primary:hover { background: #176bcb; }
+  .btn-terminal {
+    background: var(--brand-orange); color: #fff;
+  }
+  .btn-terminal:hover { background: #db691a; }
+  .btn-secondary {
+    background: #fff; color: var(--gray-700);
+    border-color: var(--gray-200);
+  }
+  .btn-secondary:hover { background: var(--gray-50); border-color: var(--gray-300); }
+  .btn-ghost {
+    background: transparent; color: var(--gray-600);
+  }
+  .btn-ghost:hover { background: var(--gray-100); color: var(--gray-700); }
+  .btn-danger {
+    background: #fff; color: var(--danger);
+    border-color: var(--gray-200);
+  }
+  .btn-danger:hover { background: var(--danger-soft); border-color: var(--danger); }
+  .btn-disabled, .btn:disabled {
+    background: var(--gray-100); color: var(--gray-400);
+    border-color: transparent;
+    cursor: not-allowed;
+  }
+  .btn-sm { height: 26px; padding: 0 10px; font-size: 12px; }
+  .btn-lg { height: 40px; padding: 0 16px; font-size: 14px; }
+  .btn-full { width: 100%; }
+
+  /* ------- Status pills ------- */
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .pill::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: currentColor;
+  }
+  .pill.success { background: var(--success-soft); color: #15803d; }
+  .pill.warning { background: var(--warning-soft); color: #b45309; }
+  .pill.danger { background: var(--danger-soft); color: #b91c1c; }
+  .pill.info { background: var(--brand-blue-soft); color: #1456a8; }
+  .pill.neutral { background: var(--gray-100); color: var(--gray-500); }
+
+  /* ------- Main scroll area ------- */
+  .main {
+    flex: 1;
+    margin-top: 52px;
+    padding: 32px 40px 64px;
+    min-width: 0;
+  }
+  .page-head { margin-bottom: 28px; }
+  .page-head h1 {
+    font-size: 24px; font-weight: 600; letter-spacing: -0.01em;
+    margin: 0; color: var(--gray-900);
+  }
+  .page-head p {
+    margin: 6px 0 0;
+    color: var(--gray-500); font-size: 14px;
+    max-width: 640px;
+  }
+
+  /* Sections */
+  .ds-section { margin-bottom: 40px; }
+  .ds-section-head {
+    display: flex; align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .ds-section-head h2 {
+    font-size: 18px; font-weight: 600; margin: 0;
+    color: var(--gray-900);
+  }
+  .ds-section-head .micro {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray-500);
+  }
+
+  /* Card primitive */
+  .card {
+    background: #fff;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 16px;
+  }
+  .card-hoverable { transition: box-shadow .15s; }
+  .card-hoverable:hover { box-shadow: var(--shadow-hover); }
+
+  /* Grid helpers */
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* ------- Typography demo ------- */
+  .type-row {
+    display: grid;
+    grid-template-columns: 110px 110px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray-500);
+  }
+  .type-specs {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--gray-500);
+  }
+  .ts-display { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; color: var(--gray-900); }
+  .ts-h1 { font-size: 24px; font-weight: 600; letter-spacing: -0.01em; color: var(--gray-900); }
+  .ts-h2 { font-size: 18px; font-weight: 600; color: var(--gray-900); }
+  .ts-body-lg { font-size: 16px; font-weight: 500; color: var(--gray-700); }
+  .ts-body { font-size: 14px; font-weight: 400; color: var(--gray-700); }
+  .ts-small { font-size: 13px; font-weight: 500; color: var(--gray-600); }
+  .ts-micro { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-500); }
+  .ts-mono { font-family: var(--font-mono); font-size: 14px; font-weight: 500; color: var(--gray-700); }
+
+  /* ------- Color tokens ------- */
+  .swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .swatch {
+    background: #fff;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .swatch .chip { height: 56px; }
+  .swatch .meta { padding: 10px 12px; }
+  .swatch .name { font-size: 12px; font-weight: 600; color: var(--gray-700); }
+  .swatch .val { font-family: var(--font-mono); font-size: 11px; color: var(--gray-500); margin-top: 2px; }
+
+  /* ------- Data table ------- */
+  .table-card { padding: 0; overflow: hidden; }
+  .table-head {
+    display: grid;
+    grid-template-columns: 28px 1fr 100px 90px 110px 100px 80px;
+    padding: 10px 16px;
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray-500);
+  }
+  .table-row {
+    display: grid;
+    grid-template-columns: 28px 1fr 100px 90px 110px 100px 80px;
+    padding: 12px 16px;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+    transition: background .12s;
+  }
+  .table-row:last-child { border-bottom: none; }
+  .table-row:hover { background: var(--gray-50); }
+  .table-row .cell-name { font-weight: 500; color: var(--gray-700); }
+  .table-row .cell-roll { font-family: var(--font-mono); color: var(--gray-500); font-size: 12px; }
+  .table-row .cell-score { font-family: var(--font-mono); font-weight: 500; color: var(--gray-700); }
+  .table-row .cell-score .denom { color: var(--gray-500); }
+  .table-row .cell-time { font-family: var(--font-mono); color: var(--gray-500); font-size: 12px; }
+
+  /* Question card demo */
+  .qcard {
+    background: #fff;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 3px solid var(--success);
+  }
+  .qcard.flagged { border-top-color: var(--brand-orange); }
+  .qcard.danger { border-top-color: var(--danger); }
+  .qcard .q-num {
+    font-family: var(--font-mono);
+    font-size: 12px; font-weight: 600;
+    color: var(--gray-500);
+  }
+  .qcard .q-score {
+    font-family: var(--font-mono);
+    font-size: 20px; font-weight: 600;
+    color: var(--gray-900);
+  }
+  .qcard .q-score .denom { color: var(--gray-500); }
+
+  /* "Notes chip" sample (for foundation completeness) */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    background: var(--gray-100);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--gray-700);
+    border: 1px solid transparent;
+    transition: background .12s, border-color .12s;
+    cursor: pointer;
+  }
+  .chip:hover { background: #fff; border-color: var(--gray-200); }
+  .chip .plus { color: var(--gray-500); font-weight: 600; }
+
+  /* Inline tokens */
+  .kv {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--gray-500);
+  }
+  .kv code {
+    font-family: var(--font-mono);
+    background: var(--gray-100);
+    padding: 1px 6px; border-radius: 4px;
+    color: var(--gray-700);
+    font-size: 11px;
+  }
+
+  /* Subhead caption */
+  .caption {
+    color: var(--gray-500);
+    font-size: 13px;
+    margin-bottom: 12px;
+    max-width: 720px;
+  }
+
+  /* Section divider headers (mini) */
+  .lp-divider {
+    padding: 12px 16px 6px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray-500);
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="wordmark">LOAM</span>
+  <span class="wordmark-dot">/</span>
+  <span class="breadcrumb">
+    Maths Pre-Board 1
+    <span class="sep">/</span>
+    <span class="current">Design system foundation</span>
+  </span>
+  <div class="topbar-right">
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+      <span>Search students, questions…</span>
+      <span class="kbd">⌘K</span>
+    </div>
+    <button class="icon-btn" title="Notifications" aria-label="Notifications">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+    </button>
+    <div class="avatar" title="Anita Rao">AR</div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- ===== Left panel ===== -->
+  <aside class="leftpanel">
+    <div class="lp-header">
+      <div class="title">Class XII-A · Maths Pre-Board 1</div>
+      <div class="progress-meta">
+        <span class="progress-text">Reviewed</span>
+        <span class="progress-count">12 / 30</span>
+      </div>
+      <div class="lp-progressbar"><div class="fill"></div></div>
+      <input class="lp-search" placeholder="Search students…" />
+    </div>
+
+    <div class="lp-list" id="lp-list"></div>
+
+    <div class="lp-footer">
+      <button class="btn btn-terminal btn-full" disabled>
+        Submit all & continue
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ===== Main ===== -->
+  <main class="main">
+
+    <div class="page-head">
+      <h1>Design system foundation</h1>
+      <p>Notion-restrained substance, nLearn-warm chrome. Plus Jakarta Sans + JetBrains Mono. 10px card radius, 6px buttons. Brand blue threads through interactive states; brand orange reserved for terminal CTAs only.</p>
+    </div>
+
+    <!-- ============ Typography ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Typography</h2>
+        <span class="micro">Plus Jakarta Sans · JetBrains Mono</span>
+      </div>
+      <div class="card">
+        <div class="type-row">
+          <span class="type-label">Display</span>
+          <span class="type-specs">32 / 600 / -0.02em</span>
+          <span class="ts-display">9 hours 32 minutes saved</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">H1</span>
+          <span class="type-specs">24 / 600 / -0.01em</span>
+          <span class="ts-h1">Aarav Sharma · Final Review</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">H2</span>
+          <span class="type-specs">18 / 600 / 0</span>
+          <span class="ts-h2">Section A — MCQs · 20 questions</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Body Large</span>
+          <span class="type-specs">16 / 500 / 0</span>
+          <span class="ts-body-lg">AI confidence is HIGH on all 20 answers.</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Body</span>
+          <span class="type-specs">14 / 400 / 0</span>
+          <span class="ts-body">Student wrote the final answer correctly but did not include the constant of integration +C.</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Small</span>
+          <span class="type-specs">13 / 500 / 0</span>
+          <span class="ts-small">Add a note about this answer…</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Micro</span>
+          <span class="type-specs">11 / 600 / .06em / UPPER</span>
+          <span class="ts-micro">Low confidence · Needs review</span>
+        </div>
+        <div class="type-row">
+          <span class="type-label">Mono</span>
+          <span class="type-specs">JetBrains Mono</span>
+          <span class="ts-mono">Q24 &nbsp; 4/5 &nbsp; Roll 12 &nbsp; 67/80</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Color ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Color tokens</h2>
+        <span class="micro">Brand · Neutrals · Semantic</span>
+      </div>
+
+      <div class="caption">Brand</div>
+      <div class="swatches" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="swatch"><div class="chip" style="background:#1E7CE8"></div><div class="meta"><div class="name">brand-blue</div><div class="val">#1E7CE8</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#E8F2FF"></div><div class="meta"><div class="name">brand-blue-soft</div><div class="val">#E8F2FF</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F37920"></div><div class="meta"><div class="name">brand-orange</div><div class="val">#F37920</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FFF1E5"></div><div class="meta"><div class="name">brand-orange-soft</div><div class="val">#FFF1E5</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F4A04A"></div><div class="meta"><div class="name">subject-maths</div><div class="val">#F4A04A</div></div></div>
+      </div>
+
+      <div class="caption" style="margin-top:18px;">Neutrals — Notion-warm</div>
+      <div class="swatches" style="grid-template-columns: repeat(9, 1fr);">
+        <div class="swatch"><div class="chip" style="background:#FAFAF9"></div><div class="meta"><div class="name">gray-50</div><div class="val">#FAFAF9</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F4F4F2"></div><div class="meta"><div class="name">gray-100</div><div class="val">#F4F4F2</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#E7E5E0"></div><div class="meta"><div class="name">gray-200</div><div class="val">#E7E5E0</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#D4D2CC"></div><div class="meta"><div class="name">gray-300</div><div class="val">#D4D2CC</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#A8A6A0"></div><div class="meta"><div class="name">gray-400</div><div class="val">#A8A6A0</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#6B6964"></div><div class="meta"><div class="name">gray-500</div><div class="val">#6B6964</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#4A4844"></div><div class="meta"><div class="name">gray-600</div><div class="val">#4A4844</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#2C2A26"></div><div class="meta"><div class="name">gray-700</div><div class="val">#2C2A26</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#0F0E0C"></div><div class="meta"><div class="name">gray-900</div><div class="val">#0F0E0C</div></div></div>
+      </div>
+
+      <!-- Contrast rule -->
+      <div style="margin-top: 16px; padding: 14px 16px; background: var(--brand-blue-soft); border-radius: var(--radius-card); display: flex; gap: 12px; align-items: flex-start;">
+        <div style="flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-blue); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;">!</div>
+        <div style="font-size: 13px; color: var(--gray-700); line-height: 1.55;">
+          <strong style="color: var(--gray-900);">Text contrast rule.</strong>
+          Teachers may be reading dense numerics for hours; some are older. Treat <code style="font-family: var(--font-mono); background: #fff; padding: 1px 6px; border-radius: 4px; font-size: 12px;">gray-400</code> as a <strong>decoration-only</strong> token — dividers, dashed borders, status dots, icon outlines. <strong>Never use it for text.</strong> Default secondary text uses <code style="font-family: var(--font-mono); background: #fff; padding: 1px 6px; border-radius: 4px; font-size: 12px;">gray-500</code> (5.5:1 on white, WCAG AA), and small monospace metadata — roll numbers, denominators, table cell labels — uses <code style="font-family: var(--font-mono); background: #fff; padding: 1px 6px; border-radius: 4px; font-size: 12px;">gray-600</code> (9:1, WCAG AAA) since small thin type is hardest to read.
+          <div style="margin-top: 10px; display: flex; gap: 12px; align-items: center;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);">
+              <span style="display: inline-block; width: 14px; height: 14px; border-radius: 3px; background: var(--gray-400);"></span>
+              <span><code style="font-family: var(--font-mono); font-size: 11px;">gray-400</code> — decoration only · <span style="color: var(--danger); font-weight: 600;">2.9:1</span></span>
+            </span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);">
+              <span style="display: inline-block; width: 14px; height: 14px; border-radius: 3px; background: var(--gray-500);"></span>
+              <span><code style="font-family: var(--font-mono); font-size: 11px;">gray-500</code> — secondary text · <span style="color: var(--success); font-weight: 600;">5.5:1 AA</span></span>
+            </span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray-600);">
+              <span style="display: inline-block; width: 14px; height: 14px; border-radius: 3px; background: var(--gray-600);"></span>
+              <span><code style="font-family: var(--font-mono); font-size: 11px;">gray-600</code> — small numerics · <span style="color: var(--success); font-weight: 600;">9:1 AAA</span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="caption" style="margin-top:18px;">Semantic</div>
+      <div class="swatches" style="grid-template-columns: repeat(6, 1fr);">
+        <div class="swatch"><div class="chip" style="background:#16A34A"></div><div class="meta"><div class="name">success</div><div class="val">#16A34A</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#DCFCE7"></div><div class="meta"><div class="name">success-soft</div><div class="val">#DCFCE7</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#F37920"></div><div class="meta"><div class="name">warning</div><div class="val">#F37920</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FFF1E5"></div><div class="meta"><div class="name">warning-soft</div><div class="val">#FFF1E5</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#DC2626"></div><div class="meta"><div class="name">danger</div><div class="val">#DC2626</div></div></div>
+        <div class="swatch"><div class="chip" style="background:#FEE2E2"></div><div class="meta"><div class="name">danger-soft</div><div class="val">#FEE2E2</div></div></div>
+      </div>
+    </section>
+
+    <!-- ============ Buttons ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Buttons</h2>
+        <span class="micro">6px radius · never pill</span>
+      </div>
+      <div class="card">
+        <div class="caption">Variants — primary is brand-blue; terminal orange is reserved for Submit / Publish / Final Approve (max one per screen).</div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+          <button class="btn btn-primary">
+            Approve all 20
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </button>
+          <button class="btn btn-terminal">Publish to nLearn</button>
+          <button class="btn btn-secondary">Review one by one</button>
+          <button class="btn btn-ghost">Cancel</button>
+          <button class="btn btn-danger">Reject regrade</button>
+          <button class="btn btn-primary" disabled>Submit all & continue</button>
+        </div>
+
+        <div class="caption" style="margin-top:20px;">Sizes</div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+          <button class="btn btn-primary btn-sm">Small · 26px</button>
+          <button class="btn btn-primary">Default · 32px</button>
+          <button class="btn btn-primary btn-lg">Large · 40px</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Status pills ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Status pills</h2>
+        <span class="micro">11 / 600 / .06em / UPPER · fully rounded</span>
+      </div>
+      <div class="card">
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+          <span class="pill success">Reviewed</span>
+          <span class="pill info">In progress</span>
+          <span class="pill warning">Low confidence</span>
+          <span class="pill danger">Not reviewed</span>
+          <span class="pill neutral">Not started</span>
+        </div>
+        <div class="caption" style="margin-top:14px;">Pills are the <em>only</em> fully-rounded element in the system. Used for state, not decoration.</div>
+      </div>
+    </section>
+
+    <!-- ============ Card ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Card</h2>
+        <span class="micro">10px radius · flat by default · hover lifts</span>
+      </div>
+      <div class="grid-2">
+
+        <div class="card card-hoverable">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+            <div>
+              <div class="ts-micro" style="color:var(--gray-500); margin-bottom:4px;">Question 21 · 5 marks</div>
+              <div class="ts-h2">Integration by parts</div>
+            </div>
+            <span class="pill success">Reviewed</span>
+          </div>
+          <div class="ts-body" style="color:var(--gray-500); margin-bottom:14px;">Evaluate <span class="ts-mono">∫ x²e^x dx</span> using integration by parts. Student showed correct method but omitted the constant of integration.</div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div class="ts-mono" style="font-size:22px; font-weight:600;">4<span style="color:var(--gray-500)">/5</span></div>
+            <button class="btn btn-secondary btn-sm">Open</button>
+          </div>
+        </div>
+
+        <div class="card card-hoverable" style="border-top: 3px solid var(--brand-orange); border-radius: var(--radius-card);">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+            <div>
+              <div class="ts-micro" style="color:var(--gray-500); margin-bottom:4px;">Question 28 · 6 marks</div>
+              <div class="ts-h2">Alternative substitution</div>
+            </div>
+            <span class="pill warning">Low confidence</span>
+          </div>
+          <div class="ts-body" style="color:var(--gray-500); margin-bottom:14px;">Student's working uses a substitution method not explicitly covered in the answer key. Provisional marks awarded.</div>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div class="ts-mono" style="font-size:22px; font-weight:600;">4<span style="color:var(--gray-500)">/6</span></div>
+            <button class="btn btn-primary btn-sm">Review</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Data table ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Data table</h2>
+        <span class="micro">Dense · monospace numerics · row hover</span>
+      </div>
+
+      <div class="card table-card">
+        <div class="table-head">
+          <span></span>
+          <span>Student</span>
+          <span>Roll</span>
+          <span>Score</span>
+          <span>Status</span>
+          <span>Reviewed</span>
+          <span style="text-align:right;">Action</span>
+        </div>
+
+        <div class="table-row">
+          <span class="dot reviewed"></span>
+          <span class="cell-name">Aarav Sharma</span>
+          <span class="cell-roll">12</span>
+          <span class="cell-score">76<span class="denom">/80</span></span>
+          <span><span class="pill success">Reviewed</span></span>
+          <span class="cell-time">4 min</span>
+          <span style="text-align:right;"><button class="btn btn-ghost btn-sm">Open</button></span>
+        </div>
+
+        <div class="table-row">
+          <span class="dot in-progress"></span>
+          <span class="cell-name">Priya Patel</span>
+          <span class="cell-roll">18</span>
+          <span class="cell-score">—</span>
+          <span><span class="pill info">In progress</span></span>
+          <span class="cell-time">—</span>
+          <span style="text-align:right;"><button class="btn btn-ghost btn-sm">Open</button></span>
+        </div>
+
+        <div class="table-row">
+          <span class="dot flagged"></span>
+          <span class="cell-name">Rohan Mehta</span>
+          <span class="cell-roll">07</span>
+          <span class="cell-score">61<span class="denom">/80</span></span>
+          <span><span class="pill warning">Low confidence</span></span>
+          <span class="cell-time">6 min</span>
+          <span style="text-align:right;"><button class="btn btn-secondary btn-sm">Review</button></span>
+        </div>
+
+        <div class="table-row">
+          <span class="dot"></span>
+          <span class="cell-name">Sneha Iyer</span>
+          <span class="cell-roll">22</span>
+          <span class="cell-score">—</span>
+          <span><span class="pill neutral">Not started</span></span>
+          <span class="cell-time">—</span>
+          <span style="text-align:right;"><button class="btn btn-ghost btn-sm">Open</button></span>
+        </div>
+
+        <div class="table-row">
+          <span class="dot absent"></span>
+          <span class="cell-name" style="color:var(--gray-500)">Kavya Reddy</span>
+          <span class="cell-roll">25</span>
+          <span class="cell-score" style="color:var(--gray-500)">Absent</span>
+          <span><span class="pill neutral">Absent</span></span>
+          <span class="cell-time">—</span>
+          <span style="text-align:right;"><button class="btn btn-ghost btn-sm" disabled>—</button></span>
+        </div>
+
+        <div class="table-row">
+          <span class="dot reviewed" style="background:var(--danger)"></span>
+          <span class="cell-name">Arjun Kapoor</span>
+          <span class="cell-roll">03</span>
+          <span class="cell-score" style="color:var(--danger)">22<span class="denom">/80</span></span>
+          <span><span class="pill danger">Below pass</span></span>
+          <span class="cell-time">7 min</span>
+          <span style="text-align:right;"><button class="btn btn-ghost btn-sm">Open</button></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ Elevation / shadow primer ============ -->
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Elevation</h2>
+        <span class="micro">Flat default · subtle resting · blue-tinted hover</span>
+      </div>
+      <div class="grid-3">
+        <div style="background:#fff; border-radius: var(--radius-card); padding: 20px;">
+          <div class="ts-micro">No elevation</div>
+          <div class="ts-body" style="margin-top:6px;">Default surface. No border, no shadow.</div>
+        </div>
+        <div class="card">
+          <div class="ts-micro">Resting</div>
+          <div class="ts-body" style="margin-top:6px;">1px hairline + 1px subtle shadow.</div>
+        </div>
+        <div style="background:#fff; border-radius: var(--radius-card); padding: 16px; box-shadow: var(--shadow-hover);">
+          <div class="ts-micro">Hover / focus</div>
+          <div class="ts-body" style="margin-top:6px;">Lifted, with blue-tinted ring.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ds-section">
+      <div class="ds-section-head">
+        <h2>Spacing &amp; radii</h2>
+        <span class="micro">4px base unit</span>
+      </div>
+      <div class="card" style="display:flex; flex-wrap:wrap; gap:18px;">
+        <div class="kv"><code>radius-card</code> 10px</div>
+        <div class="kv"><code>radius-btn</code> 6px</div>
+        <div class="kv"><code>radius-input</code> 6px</div>
+        <div class="kv"><code>pill</code> 999px</div>
+        <div class="kv"><code>padding-card</code> 16px</div>
+        <div class="kv"><code>section-gutter</code> 24px</div>
+        <div class="kv"><code>page-padding</code> 32px</div>
+        <div class="kv"><code>left-panel</code> 280px</div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ---- Mock student data — covers archetypes from Section 8 ---- */
+const STUDENTS = [
+  { name: 'Aarav Sharma',   roll: 12, status: 'reviewed',    score: 76, note: 'top scorer' },
+  { name: 'Priya Patel',    roll: 18, status: 'in-progress', score: null },
+  { name: 'Rohan Mehta',    roll: 7,  status: 'flagged',     score: 61, note: 'low-confidence Q28' },
+  { name: 'Sneha Iyer',     roll: 22, status: 'pending',     score: null },
+  { name: 'Vikram Joshi',   roll: 1,  status: 'reviewed',    score: 64 },
+  { name: 'Arjun Kapoor',   roll: 3,  status: 'reviewed',    score: 22, note: 'failing' },
+  { name: 'Ananya Nair',    roll: 4,  status: 'reviewed',    score: 70 },
+  { name: 'Ishaan Verma',   roll: 5,  status: 'reviewed',    score: 55 },
+  { name: 'Tara Singh',     roll: 6,  status: 'reviewed',    score: 62 },
+  { name: 'Karan Bose',     roll: 8,  status: 'reviewed',    score: 58 },
+  { name: 'Diya Krishnan',  roll: 9,  status: 'reviewed',    score: 67 },
+  { name: 'Aditya Rao',     roll: 10, status: 'reviewed',    score: 49 },
+  { name: 'Meera Pillai',   roll: 11, status: 'reviewed',    score: 60 },
+  { name: 'Kabir Malhotra', roll: 13, status: 'in-progress', score: null },
+  { name: 'Nisha Saxena',   roll: 14, status: 'pending',     score: null },
+  { name: 'Yash Agarwal',   roll: 15, status: 'pending',     score: null },
+  { name: 'Riya Chatterjee',roll: 16, status: 'pending',     score: null },
+  { name: 'Devansh Gupta',  roll: 17, status: 'flagged',     score: 53, note: 'flagged Q14' },
+  { name: 'Saanvi Bhatt',   roll: 19, status: 'pending',     score: null },
+  { name: 'Veer Khanna',    roll: 20, status: 'pending',     score: null },
+  { name: 'Anika Menon',    roll: 21, status: 'pending',     score: null },
+  { name: 'Aryan Desai',    roll: 23, status: 'pending',     score: null },
+  { name: 'Pooja Rajan',    roll: 24, status: 'pending',     score: null },
+  { name: 'Kavya Reddy',    roll: 25, status: 'absent',      score: null, note: 'absent' },
+  { name: 'Shaurya Goyal',  roll: 26, status: 'pending',     score: null },
+  { name: 'Tanvi Pandey',   roll: 27, status: 'pending',     score: null },
+  { name: 'Manav Trivedi',  roll: 28, status: 'reviewed',    score: 28, note: 'failing' },
+  { name: 'Ira Chowdhury',  roll: 29, status: 'pending',     score: null },
+  { name: 'Reyansh Lal',    roll: 30, status: 'reviewed',    score: 27, note: 'failing' },
+  { name: 'Aadhya Suri',    roll: 2,  status: 'pending',     score: null },
+];
+
+const STATUS_DOT = {
+  'reviewed':    'dot reviewed',
+  'in-progress': 'dot in-progress',
+  'flagged':     'dot flagged',
+  'pending':     'dot',
+  'absent':      'dot absent',
+};
+
+const list = document.getElementById('lp-list');
+STUDENTS.forEach((s, i) => {
+  const row = document.createElement('div');
+  row.className = 'student-row' + (s.roll === 12 ? ' active' : '');
+  const scoreCls = s.status === 'absent' ? 'absent' : (s.status === 'flagged' ? 'flagged' : '');
+  const scoreText = s.status === 'absent'
+    ? '—'
+    : (s.score == null ? '' : `${s.score}<span class="denom">/80</span>`);
+  row.innerHTML = `
+    <span class="${STATUS_DOT[s.status]}"></span>
+    <div class="student-meta">
+      <div class="student-name">${s.name}</div>
+      <div class="student-roll">Roll ${String(s.roll).padStart(2,'0')}</div>
+    </div>
+    <div class="student-score ${scoreCls}">${scoreText}</div>
+  `;
+  list.appendChild(row);
+});
+</script>
+</body>
+</html>
