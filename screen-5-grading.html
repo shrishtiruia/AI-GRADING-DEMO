@@ -1666,7 +1666,7 @@
           </div>
 
           <!-- ERROR CLASSIFICATION (question-level summary, split into category + sub-type) -->
-          <div class="ws-block">
+          <div class="ws-block" id="err-block">
             <span class="block-label">Error classification</span>
             <div class="err-class-card">
               <div class="err-tag-row">
@@ -1730,9 +1730,7 @@
                   </div>
                 </div>
               </div>
-              <div class="reason-warning">
-                Student calculated the critical point correctly but did not verify it is a maximum. Marks deducted per CBSE marking scheme.
-              </div>
+              <div class="reason-warning" id="err-reason"></div>
             </div>
           </div>
 
@@ -2217,6 +2215,7 @@ document.addEventListener('click', (e) => {
       var pq = $('paper-question');
       if (pq) { pq.innerHTML = '<span class="qmeta">' + cur + ' · ' + q.max_marks + 'm</span>' + esc(questionText(cur, name)); katex(pq); }
       renderAnswerKey(cur, name);
+      renderErrClass(cur, name, q);
       var lc = $('lowconf-banner');
       if (lc) lc.hidden = !(S.isLowConfidence && S.isLowConfidence(name, cur) && !S.isReviewed(name, cur));
       renderSteps(cur, name);
@@ -2224,6 +2223,30 @@ document.addEventListener('click', (e) => {
       renderNotes(cur, name);
       renderActionBar(cur, name);
       katex(document.querySelector('.tools-body .q-text'));
+    }
+
+    /* Error classification follows the answer: hidden for full marks, a prompt to tag otherwise */
+    function renderErrClass(cur, name, q) {
+      var blk = $('err-block'); if (!blk) return;
+      var sc = S.scoreFor(name, cur);
+      if (!sc || sc.marks_awarded >= sc.max_marks) { blk.style.display = 'none'; return; }
+      blk.style.display = '';
+      var src = (q.has_or_variant && q.variants) ? q.variants[0] : q;
+      if (renderErrClass.lastKey !== name + cur) {      // reset pickers only when the answer changes
+        renderErrClass.lastKey = name + cur;
+        $('err-cat-text').textContent = 'Choose error type';
+        $('err-sub-text').textContent = 'Choose sub-type';
+        var dot = $('err-cat-dot'); if (dot) dot.style.background = '#A8A6A0';
+        document.querySelectorAll('#err-cat-menu .err-tag-option, #err-sub-menu .err-tag-option')
+          .forEach(function (o) { o.classList.remove('is-selected'); });
+      }
+      var lost = +(sc.max_marks - sc.marks_awarded).toFixed(1);
+      var reason = $('err-reason');
+      if (!sc.attempted || sc.marks_awarded === 0) {
+        reason.textContent = 'No marks awarded on this question (' + (src.chapter || 'this topic') + '). Tag the error type so it counts in class analytics.';
+      } else {
+        reason.textContent = lost + ' of ' + sc.max_marks + ' marks deducted on ' + (src.chapter || 'this topic') + '. Tag the error type so it counts in class analytics.';
+      }
     }
 
     function renderAll() {
